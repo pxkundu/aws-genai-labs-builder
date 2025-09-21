@@ -71,7 +71,7 @@ genAI-labs/
 ### Getting Started
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/aws-genai-labs-builder.git
+git clone https://github.com/pxkundu/aws-genai-labs-builder.git
 cd aws-genai-labs-builder
 
 # Explore learning resources
