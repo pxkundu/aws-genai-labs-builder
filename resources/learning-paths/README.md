@@ -248,6 +248,7 @@ Choose your learning path based on your current expertise and goals:
 
 ## 🔗 Quick Links
 
+- **[Beginner Path](./beginner/)** - Complete beginner learning journey with interactive content
 - **[Beginner Labs](./beginner-labs/)** - Start here for foundations
 - **[Intermediate Projects](./intermediate-projects/)** - Production-ready solutions
 - **[Expert Architectures](./expert-architectures/)** - Enterprise-scale systems
