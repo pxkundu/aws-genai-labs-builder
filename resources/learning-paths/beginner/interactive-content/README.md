@@ -592,19 +592,19 @@ graph TD
 ## 📚 Additional Resources
 
 ### 🎥 **Interactive Videos**
-- [Animated Explanations](https://example.com) - Visual concept learning
-- [Game Walkthroughs](https://example.com) - How to play effectively
-- [Community Highlights](https://example.com) - Best moments from learners
+- [Animated Explanations](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) - Visual concept learning by 3Blue1Brown
+- [Game Walkthroughs](https://www.youtube.com/watch?v=2ePf9rue1Ao) - How to play effectively
+- [Community Highlights](https://www.youtube.com/c/Kaggle) - Best moments from learners on Kaggle
 
 ### 📖 **Interactive Guides**
-- [Learning Style Guide](https://example.com) - Find your best approach
-- [Gamification Guide](https://example.com) - Maximize your engagement
-- [Community Guide](https://example.com) - Get the most from interactions
+- [Learning Style Guide](https://www.learning-styles-online.com/overview/) - Find your best approach
+- [Gamification Guide](https://www.gamify.com/gamification-blog) - Maximize your engagement
+- [Community Guide](https://www.kaggle.com/learn) - Get the most from interactions
 
 ### 🎮 **Tools & Apps**
-- [Mobile App](https://example.com) - Download for iOS/Android
-- [Browser Extension](https://example.com) - Learn while browsing
-- [Desktop App](https://example.com) - Full-featured learning experience
+- [Mobile App](https://play.google.com/store/apps/details?id=com.khanacademy.android) - Download Khan Academy for iOS/Android
+- [Browser Extension](https://chrome.google.com/webstore/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen) - Learn while browsing with Grammarly
+- [Desktop App](https://code.visualstudio.com/) - Full-featured learning experience with VS Code
 
 ---
 

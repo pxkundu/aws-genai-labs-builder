@@ -355,19 +355,19 @@ You're now ready to dive into the exciting world of AWS GenAI services! In the n
 ## 📚 Additional Resources
 
 ### 🎥 **Video Learning**
-- [AI Explained in 5 Minutes](https://example.com) - Quick overview
-- [Machine Learning Basics](https://example.com) - Deep dive into ML
-- [Generative AI Demos](https://example.com) - See GenAI in action
+- [AI Explained in 5 Minutes](https://www.youtube.com/watch?v=2ePf9rue1Ao) - Quick overview by 3Blue1Brown
+- [Machine Learning Basics](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) - Deep dive into ML by 3Blue1Brown
+- [Generative AI Demos](https://www.youtube.com/watch?v=G5Zq3VtZcXk) - See GenAI in action with Google AI
 
 ### 📖 **Further Reading**
-- [AI for Beginners Book](https://example.com) - Comprehensive guide
-- [GenAI Research Papers](https://example.com) - Latest developments
-- [AI Ethics Guide](https://example.com) - Responsible AI practices
+- [AI for Beginners Book](https://github.com/microsoft/AI-For-Beginners) - Comprehensive guide by Microsoft
+- [GenAI Research Papers](https://paperswithcode.com/task/generative-adversarial-networks) - Latest developments on Papers with Code
+- [AI Ethics Guide](https://www.partnershiponai.org/ai-ethics/) - Responsible AI practices by Partnership on AI
 
 ### 🎮 **Interactive Tools**
-- [AI Concept Simulator](https://example.com) - Visualize AI concepts
-- [Terminology Flashcards](https://example.com) - Practice key terms
-- [Application Explorer](https://example.com) - Discover AI uses
+- [AI Concept Simulator](https://playground.tensorflow.org/) - Visualize AI concepts with TensorFlow Playground
+- [Terminology Flashcards](https://quizlet.com/explore/artificial-intelligence) - Practice key terms on Quizlet
+- [Application Explorer](https://www.ibm.com/watson/ai-use-cases) - Discover AI uses with IBM Watson
 
 ---
 

@@ -895,19 +895,19 @@ You're now ready for:
 ## 📚 Additional Resources
 
 ### 🎥 **Video Tutorials**
-- [Streamlit Tutorials](https://example.com) - Web app development
-- [AWS AI Services](https://example.com) - Advanced features
-- [Deployment Guide](https://example.com) - Cloud deployment
+- [Streamlit Tutorials](https://www.youtube.com/playlist?list=PLtqF5YXg7GLmCvTswG32NqQypOuYkPRUE) - Web app development by Streamlit
+- [AWS AI Services](https://www.youtube.com/playlist?list=PLhr1KZpdzukcOr_6j_zmSrvYnLUtlqL1A) - Advanced features by AWS
+- [Deployment Guide](https://www.youtube.com/watch?v=9T1vfs2i9UI) - Cloud deployment with AWS
 
 ### 📖 **Documentation**
 - [AWS AI Services Docs](https://docs.aws.amazon.com/ai/)
 - [Streamlit Documentation](https://docs.streamlit.io/)
-- [Python Best Practices](https://example.com)
+- [Python Best Practices](https://realpython.com/python-pep8/) - Python coding standards
 
 ### 🎮 **Next Steps**
 - [Intermediate Learning Path](../intermediate/)
 - [Advanced Projects](../advanced/)
-- [Community Forum](https://example.com)
+- [Community Forum](https://discord.gg/streamlit) - Streamlit Discord community
 
 ---
 

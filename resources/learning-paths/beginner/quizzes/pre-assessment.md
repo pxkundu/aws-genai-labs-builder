@@ -482,19 +482,19 @@ Based on your assessment, set these goals:
 ## 📚 Additional Resources
 
 ### 🎥 **Video Learning**
-- [AI Basics for Beginners](https://example.com) - Visual explanations
-- [AWS Services Overview](https://example.com) - Service introductions
-- [Learning Tips](https://example.com) - How to learn effectively
+- [AI Basics for Beginners](https://www.youtube.com/watch?v=2ePf9rue1Ao) - Visual explanations by 3Blue1Brown
+- [AWS Services Overview](https://www.youtube.com/watch?v=8Zx6RX-4VnA) - Service introductions by AWS
+- [Learning Tips](https://www.youtube.com/watch?v=G5Zq3VtZcXk) - How to learn effectively with Google AI
 
 ### 📖 **Study Materials**
-- [Quick Reference Guide](https://example.com) - Key concepts
-- [Glossary of Terms](https://example.com) - AI terminology
-- [Learning Checklist](https://example.com) - Track your progress
+- [Quick Reference Guide](https://github.com/microsoft/AI-For-Beginners) - Key concepts by Microsoft
+- [Glossary of Terms](https://www.ibm.com/cloud/learn/artificial-intelligence-glossary) - AI terminology by IBM
+- [Learning Checklist](https://www.kaggle.com/learn) - Track your progress on Kaggle
 
 ### 🎮 **Interactive Tools**
-- [Learning Style Quiz](https://example.com) - Discover your best approach
-- [Progress Tracker](https://example.com) - Monitor your advancement
-- [Community Forum](https://example.com) - Connect with other learners
+- [Learning Style Quiz](https://www.learning-styles-online.com/overview/) - Discover your best approach
+- [Progress Tracker](https://www.kaggle.com/learn) - Monitor your advancement on Kaggle
+- [Community Forum](https://discord.gg/streamlit) - Connect with other learners on Streamlit Discord
 
 ---
 

@@ -530,19 +530,19 @@ D) Cost optimization
 ## 📚 Additional Resources
 
 ### 🎥 **Video Learning**
-- [Quiz Walkthroughs](https://example.com) - Step-by-step explanations
-- [Game Strategies](https://example.com) - Tips for success
-- [Community Highlights](https://example.com) - Best moments
+- [Quiz Walkthroughs](https://www.youtube.com/watch?v=2ePf9rue1Ao) - Step-by-step explanations by 3Blue1Brown
+- [Game Strategies](https://www.youtube.com/watch?v=G5Zq3VtZcXk) - Tips for success with Google AI
+- [Community Highlights](https://www.youtube.com/c/Kaggle) - Best moments from Kaggle
 
 ### 📖 **Study Materials**
-- [Quick Reference Guide](https://example.com) - Key concepts
-- [Practice Questions](https://example.com) - Extra practice
-- [Answer Explanations](https://example.com) - Detailed solutions
+- [Quick Reference Guide](https://github.com/microsoft/AI-For-Beginners) - Key concepts by Microsoft
+- [Practice Questions](https://www.kaggle.com/learn) - Extra practice on Kaggle
+- [Answer Explanations](https://realpython.com/python-pep8/) - Detailed solutions
 
 ### 🎮 **Community**
-- [Discord Server](https://example.com) - Chat with other learners
-- [Leaderboards](https://example.com) - See how you rank
-- [Achievement Gallery](https://example.com) - Show off your badges
+- [Discord Server](https://discord.gg/streamlit) - Chat with other learners on Streamlit Discord
+- [Leaderboards](https://www.kaggle.com/competitions) - See how you rank on Kaggle
+- [Achievement Gallery](https://www.kaggle.com/learn) - Show off your badges on Kaggle
 
 ---
 

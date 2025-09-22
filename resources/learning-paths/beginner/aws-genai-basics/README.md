@@ -524,9 +524,9 @@ You're now ready to build your first AI applications! In the next module, you'll
 ## 📚 Additional Resources
 
 ### 🎥 **Video Learning**
-- [AWS AI Services Overview](https://example.com) - Complete service tour
-- [Bedrock Deep Dive](https://example.com) - Advanced Bedrock features
-- [SageMaker Tutorial](https://example.com) - Step-by-step guide
+- [AWS AI Services Overview](https://www.youtube.com/watch?v=8Zx6RX-4VnA) - Complete service tour by AWS
+- [Bedrock Deep Dive](https://www.youtube.com/watch?v=9T1vfs2i9UI) - Advanced Bedrock features by AWS
+- [SageMaker Tutorial](https://www.youtube.com/playlist?list=PLhr1KZpdzukcOr_6j_zmSrvYnLUtlqL1A) - Step-by-step guide by AWS
 
 ### 📖 **Documentation**
 - [AWS AI Services Documentation](https://docs.aws.amazon.com/ai/)
@@ -534,9 +534,9 @@ You're now ready to build your first AI applications! In the next module, you'll
 - [SageMaker Developer Guide](https://docs.aws.amazon.com/sagemaker/)
 
 ### 🎮 **Interactive Tools**
-- [AWS AI Services Playground](https://example.com) - Try services online
-- [Cost Calculator](https://example.com) - Estimate your costs
-- [Service Comparison Tool](https://example.com) - Choose the right service
+- [AWS AI Services Playground](https://aws.amazon.com/machine-learning/ai-services/) - Try services online
+- [Cost Calculator](https://calculator.aws/) - Estimate your costs with AWS Pricing Calculator
+- [Service Comparison Tool](https://aws.amazon.com/machine-learning/ai-services/) - Choose the right service
 
 ---
 
