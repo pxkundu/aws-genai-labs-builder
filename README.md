@@ -215,8 +215,8 @@ This repository aligns with AWS certification paths:
 
 - **🐛 Issues**: Report bugs and request features
 - **💬 Discussions**: Community Q&A and knowledge sharing
-- **📧 Contact**: [your-email@domain.com]
-- **🔗 LinkedIn**: [Your LinkedIn Profile]
+- **📧 Contact**: [inboxpartha@outlook.com]
+- **🔗 LinkedIn**: https://www.linkedin.com/in/pxkundu/
 
 ## 📄 License
 
