@@ -1,10 +1,10 @@
-# 🎓 Education AI Solutions
+# 🎓 AWS GenAI Learning Platform
 
-> **AI-powered educational transformation for personalized learning and institutional excellence**
+> **Comprehensive learning platform for AWS Generative AI services and LLM agent-based solution architectures**
 
-## 🎯 Solution Overview
+## 🎯 Platform Overview
 
-Comprehensive AI platform for educational institutions leveraging AWS GenAI services to create personalized learning experiences, automate administrative tasks, enhance teaching effectiveness, and improve student outcomes through intelligent automation and data-driven insights.
+A modular, hands-on learning platform designed to teach AWS GenAI services through practical, agent-based solution architectures. This platform provides 5 distinct GenAI-based LLM agent workflows that demonstrate real-world applications and can be reused across different projects.
 
 ## 🏗️ Architecture Overview
 

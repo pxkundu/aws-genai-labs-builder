@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  learning-platform:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - AWS_REGION=us-east-1
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./tests:/app/tests
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - learning-platform-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - learning-platform-network
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=learning_platform
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - learning-platform-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - learning-platform
+    networks:
+      - learning-platform-network
+
+volumes:
+  redis_data:
+  postgres_data:
+
+networks:
+  learning-platform-network:
+    driver: bridge
