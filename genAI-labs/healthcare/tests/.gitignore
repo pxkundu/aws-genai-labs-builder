@@ -1,0 +1,240 @@
+# Healthcare ChatGPT Clone - Tests .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Test databases
+test.db
+test.sqlite
+test.sqlite3
+*.test.db
+*.test.sqlite
+*.test.sqlite3
+
+# Test logs
+test.log
+pytest.log
+test-results.log
+
+# Test artifacts
+test-results/
+test-output/
+test-reports/
+test-screenshots/
+test-videos/
+
+# Playwright
+playwright-report/
+test-results/
+playwright/.cache/
+
+# Selenium
+screenshots/
+videos/
+logs/
+
+# Performance test results
+benchmark-results/
+performance-results/
+load-test-results/
+
+# Security test results
+security-scan-results/
+vulnerability-reports/
+
+# Mock data
+mock-data/
+test-data/
+fixtures/
+sample-data/
+
+# Temporary test files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Test configuration overrides
+test-config.local.py
+test-settings.local.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Local development
+.local/
+local/
+
+# Healthcare specific test data
+test-patient-data/
+test-medical-records/
+test-phi-data/
+test-healthcare-data/
+test-medical-images/
+test-lab-results/
+
+# Application specific test data
+test-uploads/
+test-downloads/
+test-cache/
+test-sessions/
+
+# API keys and secrets for testing
+test-secrets/
+test-credentials/
+test-config/secrets/
+test-api-keys.json
+
+# Test environment files
+test.env
+test.env.local
+test.env.development.local
+test.env.test.local
+test.env.production.local
+
+# Test infrastructure
+test-terraform/
+test-infrastructure/
+test-aws-credentials.json
+
+# Test reports
+reports/
+allure-results/
+allure-report/
+
+# Jupyter Notebook test files
+*.ipynb
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Celery test files
+celerybeat-schedule
+celerybeat.pid
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Test model files
+*.test.pkl
+*.test.joblib
+*.test.h5
+*.test.model
+
+# Test configuration files
+test-config.json
+test-settings.json
+test-parameters.json
+
+# Load testing
+locust-reports/
+k6-reports/
+
+# Integration test results
+integration-test-results/
+e2e-test-results/
+
+# API test results
+api-test-results/
+postman-results/
+
+# Frontend test results
+frontend-test-results/
+cypress-results/
+jest-results/
+
+# Infrastructure test results
+terraform-test-results/
+infrastructure-test-results/

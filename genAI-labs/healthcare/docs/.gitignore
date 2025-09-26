@@ -1,0 +1,48 @@
+# Healthcare ChatGPT Clone - Documentation .gitignore
+
+# Build outputs
+_build/
+build/
+site/
+dist/
+
+# Sphinx
+.sphinx/
+
+# MkDocs
+site/
+
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# GitBook
+_book/
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.backup
+*.old

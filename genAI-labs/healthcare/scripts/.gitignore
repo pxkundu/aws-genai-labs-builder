@@ -1,0 +1,253 @@
+# Healthcare ChatGPT Clone - Scripts .gitignore
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# API Keys and Secrets
+*.key
+*.pem
+secrets/
+credentials/
+config/secrets/
+openai_api_key.txt
+aws_credentials.json
+database_credentials.json
+
+# Logs
+logs/
+*.log
+deployment.log
+script.log
+error.log
+access.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local development
+.local/
+local/
+
+# Cache
+cache/
+.cache/
+
+# Script outputs
+output/
+results/
+reports/
+
+# Deployment artifacts
+deployment-artifacts/
+build-artifacts/
+release-artifacts/
+
+# Configuration overrides
+config/local.py
+config/production.py
+config/development.py
+local-config.json
+production-config.json
+development-config.json
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Healthcare specific
+patient_data/
+medical_records/
+phi_data/
+healthcare_data/
+medical_images/
+lab_results/
+
+# Application specific
+uploads/
+downloads/
+sessions/
+
+# AWS
+.aws/
+aws-credentials.json
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+*.tfplan
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Kubernetes
+*.kubeconfig
+kubeconfig
+
+# Helm
+charts/*.tgz
+
+# Ansible
+*.retry
+.ansible/
+
+# Packer
+packer_cache/
+*.pkr.hcl.backup
+
+# CloudFormation
+*.template
+*.yaml.backup
+*.yml.backup
+
+# Script execution logs
+execution-logs/
+script-logs/
+deployment-logs/
+
+# Performance monitoring
+performance-logs/
+monitoring-logs/
+metrics-logs/
+
+# Security logs
+security-logs/
+audit-logs/
+compliance-logs/
+
+# Backup scripts
+backup-scripts/
+restore-scripts/
+migration-scripts/
+
+# Test scripts
+test-scripts/
+validation-scripts/
+verification-scripts/
+
+# Maintenance scripts
+maintenance-scripts/
+cleanup-scripts/
+update-scripts/
+
+# Monitoring scripts
+monitoring-scripts/
+alerting-scripts/
+health-check-scripts/
+
+# Data processing scripts
+data-processing-scripts/
+etl-scripts/
+transformation-scripts/
+
+# Database scripts
+database-scripts/
+migration-scripts/
+seed-scripts/
+
+# Infrastructure scripts
+infrastructure-scripts/
+provisioning-scripts/
+configuration-scripts/
+
+# Application scripts
+application-scripts/
+deployment-scripts/
+rollback-scripts/
+
+# Utility scripts
+utility-scripts/
+helper-scripts/
+common-scripts/
+
+# Environment-specific scripts
+dev-scripts/
+staging-scripts/
+prod-scripts/
+
+# Script templates
+templates/
+*.template
+*.tmpl
+
+# Script documentation
+script-docs/
+documentation/
+help-files/
+
+# Script versioning
+versions/
+releases/
+tags/
+
+# Script dependencies
+dependencies/
+requirements/
+packages/
+
+# Script testing
+test-results/
+test-output/
+test-reports/
+
+# Script validation
+validation-results/
+verification-results/
+compliance-results/
+
+# Script security
+security-scan-results/
+vulnerability-reports/
+penetration-test-results/
+
+# Script performance
+performance-results/
+benchmark-results/
+load-test-results/
+
+# Script monitoring
+monitoring-results/
+alerting-results/
+health-check-results/
+
+# Script backup
+backup-results/
+restore-results/
+migration-results/
+
+# Script maintenance
+maintenance-results/
+cleanup-results/
+update-results/

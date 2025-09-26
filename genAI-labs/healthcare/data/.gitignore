@@ -1,0 +1,203 @@
+# Healthcare ChatGPT Clone - Data .gitignore
+
+# Patient data and PHI (Protected Health Information)
+patient_data/
+medical_records/
+phi_data/
+hipaa_data/
+protected_health_information/
+
+# Medical images and files
+medical_images/
+lab_results/
+radiology_images/
+pathology_images/
+medical_documents/
+clinical_notes/
+
+# Personal health information
+personal_health_records/
+patient_identifiers/
+medical_history/
+treatment_records/
+prescription_data/
+
+# Healthcare data exports
+data_exports/
+patient_exports/
+medical_exports/
+healthcare_exports/
+
+# Backup data
+backup_data/
+data_backups/
+medical_backups/
+patient_backups/
+
+# Temporary data files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Large data files
+*.csv
+*.xlsx
+*.xls
+*.json
+*.xml
+*.pdf
+*.dcm
+*.nii
+*.nii.gz
+
+# Database dumps
+*.sql
+*.dump
+*.backup
+
+# Log files
+*.log
+data.log
+import.log
+export.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# API keys and secrets
+secrets/
+credentials/
+config/secrets/
+api_keys.json
+database_credentials.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Local development
+.local/
+local/
+
+# Cache files
+cache/
+.cache/
+
+# Upload directories
+uploads/
+downloads/
+
+# Session data
+sessions/
+session_data/
+
+# Knowledge base sensitive data
+knowledge_base/sensitive/
+knowledge_base/private/
+knowledge_base/confidential/
+
+# Sample data (keep these)
+# !knowledge_base/samples/
+# !sample_data/
+# !examples/
+
+# Test data
+test_data/
+mock_data/
+fixtures/
+sample_data/
+
+# Data processing artifacts
+processed_data/
+transformed_data/
+cleaned_data/
+raw_data/
+
+# Data validation results
+validation_results/
+data_quality_reports/
+compliance_reports/
+
+# Data pipeline artifacts
+pipeline_logs/
+etl_logs/
+data_pipeline_results/
+
+# Machine learning models
+*.pkl
+*.joblib
+*.h5
+*.model
+*.pth
+*.pt
+
+# Data analysis results
+analysis_results/
+statistical_reports/
+research_data/
+
+# Compliance and audit data
+audit_logs/
+compliance_data/
+hipaa_logs/
+security_logs/
+
+# Data encryption keys
+*.key
+*.pem
+encryption_keys/
+decryption_keys/
+
+# Data anonymization
+anonymized_data/
+deidentified_data/
+pseudonymized_data/
+
+# Data retention
+archived_data/
+retired_data/
+deleted_data/
+
+# Data sharing
+shared_data/
+external_data/
+third_party_data/
+
+# Data governance
+data_catalog/
+data_dictionary/
+data_lineage/
+data_governance/
+
+# Data quality
+data_quality/
+quality_checks/
+validation_rules/
+
+# Data security
+security_scan_results/
+vulnerability_reports/
+penetration_test_results/
