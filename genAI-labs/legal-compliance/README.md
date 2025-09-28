@@ -1,10 +1,8 @@
-# ⚖️ Legal & Compliance AI Solutions
+# ⚖️ Legal Compliance AI Platform
 
-> **AI-powered legal automation and compliance management for modern law firms and enterprises**
+> **Multi-LLM Legal Question Answering System for Western and European Law**
 
-## 🎯 Solution Overview
-
-Comprehensive AI platform for legal professionals and compliance teams leveraging AWS GenAI services to automate document analysis, streamline contract management, ensure regulatory compliance, and enhance legal research capabilities through intelligent automation and natural language processing.
+A comprehensive AI-powered platform that provides legal support and analysis using the top 3 LLMs (OpenAI GPT-4, Claude 3.5, and Gemini Pro) with a simple, intuitive interface for legal professionals and individuals seeking legal guidance.
 
 ## 🏗️ Architecture Overview
 
