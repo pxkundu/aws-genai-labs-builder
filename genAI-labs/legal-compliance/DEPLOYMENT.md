@@ -4,6 +4,61 @@
 
 This guide will help you deploy the Legal Compliance AI Platform to AWS using Terraform and Docker.
 
+### Deployment Flow
+
+```mermaid
+flowchart TD
+    subgraph "Pre-Deployment"
+        CLONE[📥 Clone Repository]
+        CONFIG[⚙️ Configure Environment]
+        KEYS[🔑 Add API Keys]
+    end
+    
+    subgraph "Infrastructure Deployment"
+        TF_INIT[🏗️ Terraform Init]
+        TF_PLAN[📋 Terraform Plan]
+        TF_APPLY[✅ Terraform Apply]
+        OUTPUTS[📤 Get Outputs]
+    end
+    
+    subgraph "Application Deployment"
+        BUILD[🔨 Build Docker Images]
+        PUSH[📤 Push to ECR]
+        DEPLOY[🚀 Deploy to ECS]
+        VERIFY[✅ Verify Deployment]
+    end
+    
+    subgraph "Post-Deployment"
+        TEST[🧪 Run Tests]
+        MONITOR[📊 Monitor Services]
+        SCALE[📈 Scale as Needed]
+    end
+    
+    CLONE --> CONFIG
+    CONFIG --> KEYS
+    KEYS --> TF_INIT
+    TF_INIT --> TF_PLAN
+    TF_PLAN --> TF_APPLY
+    TF_APPLY --> OUTPUTS
+    OUTPUTS --> BUILD
+    BUILD --> PUSH
+    PUSH --> DEPLOY
+    DEPLOY --> VERIFY
+    VERIFY --> TEST
+    TEST --> MONITOR
+    MONITOR --> SCALE
+    
+    classDef pre fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef infra fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef app fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef post fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    
+    class CLONE,CONFIG,KEYS pre
+    class TF_INIT,TF_PLAN,TF_APPLY,OUTPUTS infra
+    class BUILD,PUSH,DEPLOY,VERIFY app
+    class TEST,MONITOR,SCALE post
+```
+
 ### Prerequisites
 
 Before starting, ensure you have:
@@ -215,6 +270,65 @@ class ProductionSettings(Settings):
 ```
 
 ## 📊 Monitoring and Observability
+
+### Monitoring Architecture
+
+```mermaid
+graph TB
+    subgraph "Application Layer"
+        FE[🖥️ Frontend]
+        BE[⚡ Backend API]
+    end
+    
+    subgraph "Infrastructure Layer"
+        ECS[🐳 ECS Fargate]
+        ALB[⚖️ Load Balancer]
+        RDS[🐘 RDS Database]
+        REDIS[🔴 Redis Cache]
+    end
+    
+    subgraph "Monitoring Stack"
+        CW[📊 CloudWatch]
+        XR[🔍 X-Ray Tracing]
+        SNS[📢 SNS Alerts]
+        LAMBDA[⚡ Lambda Functions]
+    end
+    
+    subgraph "Metrics & Logs"
+        METRICS[📈 Custom Metrics]
+        LOGS[📋 Application Logs]
+        TRACES[🔍 Distributed Traces]
+        ALERTS[🚨 Alert Notifications]
+    end
+    
+    FE -->|"Metrics"| CW
+    BE -->|"Metrics"| CW
+    ECS -->|"Metrics"| CW
+    ALB -->|"Metrics"| CW
+    RDS -->|"Metrics"| CW
+    REDIS -->|"Metrics"| CW
+    
+    BE -->|"Traces"| XR
+    ECS -->|"Traces"| XR
+    
+    CW -->|"Process"| LAMBDA
+    LAMBDA -->|"Generate"| METRICS
+    LAMBDA -->|"Analyze"| LOGS
+    LAMBDA -->|"Correlate"| TRACES
+    
+    CW -->|"Thresholds"| SNS
+    SNS -->|"Notify"| ALERTS
+    
+    classDef app fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef infra fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef monitor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef data fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    
+    class FE,BE app
+    class ECS,ALB,RDS,REDIS infra
+    class CW,XR,SNS,LAMBDA monitor
+    class METRICS,LOGS,TRACES,ALERTS data
+```
 
 ### CloudWatch Dashboards
 

@@ -6,25 +6,166 @@ A comprehensive AI-powered platform that provides legal support and analysis usi
 
 ## 🏗️ Architecture Overview
 
+```mermaid
+graph TB
+    subgraph "Legal Document Input"
+        DOC[📄 Legal Documents]
+        DOC --> |"Contracts"| CON[📋 Contracts]
+        DOC --> |"Case Files"| CAS[📁 Case Files]
+        DOC --> |"Regulations"| REG[📜 Regulations]
+        DOC --> |"Court Records"| CRT[⚖️ Court Records]
+    end
+    
+    subgraph "Processing Pipeline"
+        TXT[🔍 Textract OCR]
+        LAM[⚡ Lambda Functions]
+        EVT[📡 EventBridge]
+        DDB[🗄️ DynamoDB]
+    end
+    
+    subgraph "AI Services Layer"
+        BED[🧠 Amazon Bedrock]
+        SAG[🤖 SageMaker]
+        COM[📊 Comprehend]
+        TXT2[🔍 Textract AI]
+    end
+    
+    subgraph "Applications Layer"
+        CAI[📄 Contract AI]
+        LRS[🔍 Legal Research]
+        DIL[📋 Due Diligence]
+        CMG[📊 Case Management]
+    end
+    
+    subgraph "Analytics & Output"
+        RISK[⚠️ Risk Analysis]
+        COMP[✅ Compliance Monitoring]
+        AUD[📊 Audit Trails]
+        OUT[📈 Automated Analysis]
+    end
+    
+    CON --> TXT
+    CAS --> TXT
+    REG --> TXT
+    CRT --> TXT
+    
+    TXT --> LAM
+    LAM --> EVT
+    EVT --> DDB
+    
+    DDB --> BED
+    DDB --> SAG
+    DDB --> COM
+    DDB --> TXT2
+    
+    BED --> CAI
+    SAG --> LRS
+    COM --> DIL
+    TXT2 --> CMG
+    
+    CAI --> RISK
+    LRS --> COMP
+    DIL --> AUD
+    CMG --> OUT
+    
+    RISK --> OUT
+    COMP --> OUT
+    AUD --> OUT
+    
+    classDef input fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef process fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef ai fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef app fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef output fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    
+    class DOC,CON,CAS,REG,CRT input
+    class TXT,LAM,EVT,DDB process
+    class BED,SAG,COM,TXT2 ai
+    class CAI,LRS,DIL,CMG app
+    class RISK,COMP,AUD,OUT output
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Legal         │    │  Processing     │    │   AI Services   │
-│   Documents     │    │  Pipeline       │    │                 │
-│ • Contracts     │───▶│ • Textract      │───▶│ • Bedrock       │
-│ • Case Files    │    │ • Lambda        │    │ • SageMaker     │
-│ • Regulations   │    │ • EventBridge   │    │ • Comprehend    │
-│ • Court Records │    │ • DynamoDB      │    │ • Textract      │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                ▲                       │
-                                │                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Compliance &  │    │   Applications  │    │    Outputs      │
-│   Analytics     │    │                 │    │                 │
-│ • Risk Analysis │◀───│ • Contract AI   │◀───│ • Automated     │
-│ • Compliance    │    │ • Legal Research│    │   Analysis      │
-│   Monitoring    │    │ • Due Diligence │    │ • Risk Reports  │
-│ • Audit Trails  │    │ • Case Management│    │ • Compliance    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+
+## 📁 Project Structure
+
+```mermaid
+graph TB
+    subgraph "Legal Compliance AI Platform"
+        ROOT[📁 legal-compliance/]
+        
+        subgraph "Documentation"
+            README[📖 README.md]
+            ARCH[🏗️ architecture.md]
+            DEPLOY[🚀 DEPLOYMENT.md]
+            CONTRIB[🤝 CONTRIBUTING.md]
+        end
+        
+        subgraph "Configuration"
+            DOCKER[🐳 docker-compose.yml]
+            REQ[📋 requirements.txt]
+            ENV[⚙️ env.example]
+        end
+        
+        subgraph "Infrastructure"
+            INFRA[🏗️ infrastructure/]
+            INFRA --> MAIN[📄 main.tf]
+            INFRA --> VARS[📄 variables.tf]
+            INFRA --> OUT[📄 outputs.tf]
+        end
+        
+        subgraph "Backend API"
+            BACK[⚡ backend/]
+            BACK --> MAIN_PY[🐍 main.py]
+            BACK --> CORE[📁 core/]
+            BACK --> API[📁 api/]
+            BACK --> MODELS[📁 models/]
+            BACK --> SERVICES[📁 services/]
+            BACK --> TESTS[📁 tests/]
+        end
+        
+        subgraph "Frontend UI"
+            FRONT[🖥️ frontend/]
+            FRONT --> PKG[📦 package.json]
+            FRONT --> SRC[📁 src/]
+            SRC --> APP[📁 app/]
+            SRC --> COMP[📁 components/]
+            SRC --> SVC[📁 services/]
+            FRONT --> PUB[📁 public/]
+        end
+        
+        subgraph "Supporting Files"
+            DATA[📁 data/]
+            SCRIPTS[📁 scripts/]
+            DOCS[📁 docs/]
+        end
+    end
+    
+    ROOT --> README
+    ROOT --> ARCH
+    ROOT --> DEPLOY
+    ROOT --> CONTRIB
+    ROOT --> DOCKER
+    ROOT --> REQ
+    ROOT --> ENV
+    ROOT --> INFRA
+    ROOT --> BACK
+    ROOT --> FRONT
+    ROOT --> DATA
+    ROOT --> SCRIPTS
+    ROOT --> DOCS
+    
+    classDef docs fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef config fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef infra fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef backend fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef frontend fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef support fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    
+    class README,ARCH,DEPLOY,CONTRIB docs
+    class DOCKER,REQ,ENV config
+    class INFRA,MAIN,VARS,OUT infra
+    class BACK,MAIN_PY,CORE,API,MODELS,SERVICES,TESTS backend
+    class FRONT,PKG,SRC,APP,COMP,SVC,PUB frontend
+    class DATA,SCRIPTS,DOCS support
 ```
 
 ## 🔧 Core Solutions
@@ -41,11 +182,39 @@ A comprehensive AI-powered platform that provides legal support and analysis usi
 - **Contract Comparison**: Side-by-side comparison of contract versions
 
 #### Architecture
-```python
-# Contract Analysis Pipeline
-Contract Upload → OCR/Text Extraction → AI Analysis → Risk Assessment → Recommendations
-      ↓                ↓                    ↓              ↓              ↓
-   S3 Storage      Textract           Bedrock        SageMaker      Legal Team
+```mermaid
+flowchart LR
+    subgraph "Contract Analysis Pipeline"
+        UPLOAD[📤 Contract Upload]
+        OCR[🔍 OCR/Text Extraction]
+        AI[🧠 AI Analysis]
+        RISK[⚠️ Risk Assessment]
+        REC[💡 Recommendations]
+    end
+    
+    subgraph "Storage & Processing"
+        S3[☁️ S3 Storage]
+        TXT[🔍 Textract]
+        BED[🧠 Bedrock]
+        SAG[🤖 SageMaker]
+        TEAM[👥 Legal Team]
+    end
+    
+    UPLOAD -->|"Store"| S3
+    UPLOAD -->|"Extract Text"| OCR
+    OCR -->|"Process"| TXT
+    TXT -->|"Analyze"| AI
+    AI -->|"Bedrock AI"| BED
+    BED -->|"Risk Model"| RISK
+    RISK -->|"SageMaker ML"| SAG
+    SAG -->|"Generate"| REC
+    REC -->|"Review"| TEAM
+    
+    classDef pipeline fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef storage fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    
+    class UPLOAD,OCR,AI,RISK,REC pipeline
+    class S3,TXT,BED,SAG,TEAM storage
 ```
 
 #### Implementation
@@ -596,23 +765,44 @@ class DueDiligenceAI:
 - **Cost Savings**: 50-70% reduction in legal operational costs
 
 ### Cost Savings
-```
-AI-Enhanced Legal Operations:
-
-Contract Review:
-- Manual Review: $200-500 per contract
-- AI-Assisted Review: $50-100 per contract
-- Savings: 75% cost reduction
-
-Legal Research:
-- Manual Research: $150-300 per hour
-- AI Research: $20-50 per hour
-- Savings: 80% cost reduction
-
-Compliance Monitoring:
-- Manual Monitoring: $100-200 per regulation
-- AI Monitoring: $20-40 per regulation
-- Savings: 80% cost reduction
+```mermaid
+graph TB
+    subgraph "AI-Enhanced Legal Operations"
+        subgraph "Contract Review"
+            MR1[📄 Manual Review<br/>$200-500 per contract]
+            AR1[🤖 AI-Assisted Review<br/>$50-100 per contract]
+            S1[💰 75% Cost Reduction]
+        end
+        
+        subgraph "Legal Research"
+            MR2[🔍 Manual Research<br/>$150-300 per hour]
+            AR2[🤖 AI Research<br/>$20-50 per hour]
+            S2[💰 80% Cost Reduction]
+        end
+        
+        subgraph "Compliance Monitoring"
+            MR3[📊 Manual Monitoring<br/>$100-200 per regulation]
+            AR3[🤖 AI Monitoring<br/>$20-40 per regulation]
+            S3[💰 80% Cost Reduction]
+        end
+    end
+    
+    MR1 -->|"vs"| AR1
+    AR1 --> S1
+    
+    MR2 -->|"vs"| AR2
+    AR2 --> S2
+    
+    MR3 -->|"vs"| AR3
+    AR3 --> S3
+    
+    classDef manual fill:#ffebee,stroke:#c62828,stroke-width:2px
+    classDef ai fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef savings fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class MR1,MR2,MR3 manual
+    class AR1,AR2,AR3 ai
+    class S1,S2,S3 savings
 ```
 
 ## 🚀 Implementation Guide

@@ -7,25 +7,52 @@ A comprehensive legal compliance platform providing LLM-based support for Wester
 
 ### High-Level Architecture
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend API   │    │   LLM Services  │
-│   (React/NextJS)│◀──▶│   (FastAPI)     │◀──▶│                 │
-│                 │    │                 │    │ • OpenAI GPT-4  │
-│ • Question UI   │    │ • Multi-LLM     │    │ • Claude 3.5    │
-│ • Results View  │    │   Orchestration │    │ • Gemini Pro    │
-│ • History       │    │ • Legal Context │    │                 │
-└─────────────────┘    │ • Caching       │    └─────────────────┘
-                       └─────────────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │   Data Layer    │
-                       │                 │
-                       │ • PostgreSQL    │
-                       │ • Redis Cache   │
-                       │ • S3 Storage    │
-                       └─────────────────┘
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        UI[🖥️ React/Next.js Frontend]
+        UI --> |"Question UI"| QUI[📝 Question Interface]
+        UI --> |"Results View"| RUI[📊 Response Display]
+        UI --> |"History"| HUI[📚 Question History]
+    end
+    
+    subgraph "Backend API Layer"
+        API[⚡ FastAPI Backend]
+        API --> |"Multi-LLM"| MLO[🤖 LLM Orchestration]
+        API --> |"Legal Context"| LCT[⚖️ Legal Context Engine]
+        API --> |"Caching"| CCH[💾 Response Caching]
+        API --> |"Rate Limiting"| RTL[🛡️ Rate Limiting]
+    end
+    
+    subgraph "LLM Services Layer"
+        GPT[🧠 OpenAI GPT-4]
+        CLA[🎭 Claude 3.5 Sonnet]
+        GEM[💎 Google Gemini Pro]
+    end
+    
+    subgraph "Data Layer"
+        PG[🐘 PostgreSQL Database]
+        RED[🔴 Redis Cache]
+        S3[☁️ S3 Storage]
+    end
+    
+    UI <-->|"HTTP/HTTPS"| API
+    API <-->|"API Calls"| GPT
+    API <-->|"API Calls"| CLA
+    API <-->|"API Calls"| GEM
+    API <-->|"Data Storage"| PG
+    API <-->|"Cache Operations"| RED
+    API <-->|"File Storage"| S3
+    
+    classDef frontend fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef backend fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef llm fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef data fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    
+    class UI,QUI,RUI,HUI frontend
+    class API,MLO,LCT,CCH,RTL backend
+    class GPT,CLA,GEM llm
+    class PG,RED,S3 data
 ```
 
 ### Component Details
@@ -84,6 +111,78 @@ A comprehensive legal compliance platform providing LLM-based support for Wester
 
 ### Deployment Architecture
 
+```mermaid
+graph TB
+    subgraph "AWS Cloud Infrastructure"
+        subgraph "Internet Gateway"
+            CF[🌐 CloudFront CDN]
+        end
+        
+        subgraph "Public Subnets"
+            ALB[⚖️ Application Load Balancer]
+            NAT[🔀 NAT Gateway]
+        end
+        
+        subgraph "Private Subnets"
+            subgraph "ECS Fargate Cluster"
+                FE[🖥️ Frontend Container]
+                BE[⚡ Backend Container]
+            end
+            
+            subgraph "Database Layer"
+                RDS[🐘 RDS PostgreSQL]
+                REDIS[🔴 ElastiCache Redis]
+            end
+        end
+        
+        subgraph "Storage Layer"
+            S3[☁️ S3 Buckets]
+            ECR[📦 ECR Registry]
+        end
+        
+        subgraph "Monitoring & Security"
+            CW[📊 CloudWatch]
+            XR[🔍 X-Ray Tracing]
+            SNS[📢 SNS Alerts]
+            SM[🔐 Secrets Manager]
+        end
+    end
+    
+    CF -->|"HTTPS"| ALB
+    ALB -->|"Load Balance"| FE
+    ALB -->|"Load Balance"| BE
+    BE -->|"Database Queries"| RDS
+    BE -->|"Cache Operations"| REDIS
+    BE -->|"File Storage"| S3
+    FE -->|"API Calls"| BE
+    
+    ECR -->|"Container Images"| FE
+    ECR -->|"Container Images"| BE
+    
+    CW -->|"Monitor"| FE
+    CW -->|"Monitor"| BE
+    CW -->|"Monitor"| RDS
+    CW -->|"Monitor"| REDIS
+    
+    XR -->|"Trace"| BE
+    SNS -->|"Alerts"| CW
+    SM -->|"API Keys"| BE
+    
+    classDef frontend fill:#e3f2fd,stroke:#0277bd,stroke-width:2px
+    classDef backend fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef database fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef storage fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef monitoring fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef network fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    
+    class FE frontend
+    class BE backend
+    class RDS,REDIS database
+    class S3,ECR storage
+    class CW,XR,SNS,SM monitoring
+    class CF,ALB,NAT network
+```
+
 #### Infrastructure (Terraform)
 - **AWS ECS/Fargate**: Containerized application deployment
 - **Application Load Balancer**: Traffic distribution
@@ -112,7 +211,85 @@ A comprehensive legal compliance platform providing LLM-based support for Wester
 - **Response Caching**: 80% cache hit rate
 - **Auto-scaling**: Based on CPU and memory usage
 
+### Data Flow Architecture
+
+```mermaid
+sequenceDiagram
+    participant U as 👤 User
+    participant F as 🖥️ Frontend
+    participant B as ⚡ Backend API
+    participant C as 💾 Cache
+    participant D as 🐘 Database
+    participant O as 🧠 OpenAI
+    participant A as 🎭 Anthropic
+    participant G as 💎 Google
+    
+    U->>F: Submit Legal Question
+    F->>B: POST /api/v1/ask
+    B->>C: Check Cache
+    alt Cache Hit
+        C-->>B: Return Cached Response
+    else Cache Miss
+        B->>D: Store Question
+        B->>O: Request Analysis
+        B->>A: Request Analysis
+        B->>G: Request Analysis
+        O-->>B: GPT-4 Response
+        A-->>B: Claude Response
+        G-->>B: Gemini Response
+        B->>B: Compare & Rank Responses
+        B->>C: Cache Results
+        B->>D: Store Responses
+    end
+    B-->>F: Return Analysis Results
+    F-->>U: Display Multi-LLM Responses
+    
+    Note over U,G: Complete Legal Analysis Flow
+```
+
 ### Development Workflow
+
+```mermaid
+graph LR
+    subgraph "Development Environment"
+        DEV[👨‍💻 Developer]
+        IDE[💻 IDE/Editor]
+        DC[🐳 Docker Compose]
+        DB[🗄️ Local Database]
+    end
+    
+    subgraph "CI/CD Pipeline"
+        GH[📝 GitHub]
+        GA[⚙️ GitHub Actions]
+        TEST[🧪 Test Suite]
+        BUILD[🔨 Docker Build]
+        TF[🏗️ Terraform Plan]
+    end
+    
+    subgraph "Deployment Environments"
+        STAGE[🧪 Staging]
+        PROD[🚀 Production]
+    end
+    
+    DEV -->|"Code Changes"| IDE
+    IDE -->|"Commit & Push"| GH
+    GH -->|"Trigger"| GA
+    GA -->|"Run Tests"| TEST
+    GA -->|"Build Images"| BUILD
+    GA -->|"Validate Infra"| TF
+    GA -->|"Deploy"| STAGE
+    STAGE -->|"Promote"| PROD
+    
+    DC -->|"Local Dev"| DB
+    
+    classDef dev fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef cicd fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef deploy fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    
+    class DEV,IDE,DC,DB dev
+    class GH,GA,TEST,BUILD,TF cicd
+    class STAGE,PROD deploy
+```
 
 #### Local Development
 - **Docker Compose**: Local environment setup
