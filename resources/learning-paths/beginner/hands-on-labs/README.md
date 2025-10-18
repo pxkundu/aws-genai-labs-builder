@@ -1,84 +1,84 @@
 # 🛠️ Hands-on Labs - Building Your First AI Applications
 
-> **From Theory to Practice - Let's Build Something Amazing!**
+> **Learn by doing! Build real AI applications step-by-step**
 
-## 🎯 Module Overview
+## 🎯 Lab Overview
 
-Welcome to the most exciting part of your GenAI journey! In this module, you'll roll up your sleeves and build real AI applications. By the end, you'll have a portfolio of working AI projects that you can show off to friends, family, and potential employers!
+Welcome to the hands-on labs! This is where theory meets practice. You'll build real AI applications using AWS services, learning through guided projects that you can actually use and showcase.
 
-## 📚 Learning Objectives
-
-By the end of this module, you will:
-- 🛠️ Build your first AI-powered chatbot
-- 🎨 Create an image generator application
-- 📊 Build a text analysis tool
-- 🎤 Develop a voice-enabled application
-- 🏆 Complete a capstone project
-
-## 🗺️ Lab Progression
+## 🎮 Lab Structure
 
 ```mermaid
 graph TD
-    A[🎯 Start Here] --> B[💬 Lab 1: AI Chatbot]
+    A[🎯 Start Here] --> B[📝 Lab 1: AI Chatbot]
     B --> C[🎨 Lab 2: Image Generator]
     C --> D[📊 Lab 3: Text Analyzer]
-    D --> E[🎤 Lab 4: Voice App]
-    E --> F[🏆 Lab 5: Capstone Project]
-    F --> G[🎉 AI Developer!]
+    D --> E[🔍 Lab 4: Document Processor]
+    E --> F[🎤 Lab 5: Voice Assistant]
+    F --> G[🏆 Capstone Project]
+    G --> H[🎉 AI Developer]
     
     B --> B1[Amazon Bedrock]
-    B --> B2[Claude Model]
+    B --> B2[API Integration]
     B --> B3[Web Interface]
     
     C --> C1[Image Generation]
-    C --> C2[Style Transfer]
-    C --> C3[Image Analysis]
+    C --> C2[Image Analysis]
+    C --> C3[Creative Applications]
     
     D --> D1[Sentiment Analysis]
     D --> D2[Entity Recognition]
-    D --> D3[Text Summarization]
+    D --> D3[Content Moderation]
     
-    E --> E1[Speech to Text]
-    E --> E2[Text to Speech]
-    E --> E3[Voice Commands]
+    E --> E1[Document Upload]
+    E --> E2[Text Extraction]
+    E --> E3[AI Analysis]
     
-    F --> F1[Multi-modal App]
-    F --> F2[Real-world Problem]
-    F --> F3[Portfolio Ready]
-    
-    style A fill:#e1f5fe
-    style G fill:#c8e6c9
-    style F fill:#fff3e0
-```
-
-## 🛠️ Lab 1: AI Chatbot with Amazon Bedrock
-
-### 🎯 Project Overview
-
-Build a conversational AI chatbot that can answer questions, have conversations, and help users with various tasks. This will be your first real AI application!
-
-### 🎨 What You'll Build
-
-```mermaid
-graph LR
-    A[👤 User] --> B[💬 Chat Interface]
-    B --> C[☁️ Amazon Bedrock]
-    C --> D[🤖 Claude Model]
-    D --> E[✨ AI Response]
-    E --> B
-    B --> A
+    F --> F1[Speech Recognition]
+    F --> F2[AI Processing]
+    F --> F3[Voice Response]
     
     style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#f3e5f5
-    style E fill:#c8e6c9
+    style H fill:#c8e6c9
+    style G fill:#fff3e0
 ```
 
-### 🚀 Step-by-Step Guide
+## 📋 Lab Prerequisites
 
-#### Step 1: Set Up Your Environment
+### **What You Need:**
+- ✅ **AWS Account**: Free tier account (we'll help you set this up!)
+- ✅ **Basic Python**: Understanding of variables, functions, and loops
+- ✅ **Text Editor**: VS Code, PyCharm, or any code editor
+- ✅ **Internet Connection**: For accessing AWS services
+- ✅ **Curiosity**: The most important requirement!
 
+### **What We'll Teach You:**
+- 🐍 **Python for AI**: Learn Python concepts as we build
+- ☁️ **AWS Services**: Master AWS AI services hands-on
+- 🎨 **Web Development**: Build simple web interfaces
+- 🔧 **API Integration**: Connect services together
+- 🎯 **Problem Solving**: Debug and troubleshoot issues
+
+## 🧪 Lab 1: AI Chatbot - Your First AI Friend
+
+### 🎯 **Lab Objective**
+Build a conversational AI chatbot that can answer questions, have conversations, and help users with various tasks.
+
+### 📚 **What You'll Learn**
+- How to use Amazon Bedrock for text generation
+- Basic API integration with Python
+- Simple web interface development
+- Conversation flow management
+
+### 🛠️ **Technologies Used**
+- **Amazon Bedrock**: For AI text generation
+- **Python Flask**: For web application
+- **HTML/CSS**: For user interface
+- **JavaScript**: For interactive features
+
+### 📋 **Lab Steps**
+
+#### **Step 1: Set Up Your Environment**
 ```bash
 # Create project directory
 mkdir ai-chatbot
@@ -89,826 +89,1311 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install required packages
-pip install boto3 streamlit
+pip install boto3 flask python-dotenv
 ```
 
-#### Step 2: Create the Chatbot Code
-
-Create `chatbot.py`:
-
+#### **Step 2: Configure AWS Credentials**
 ```python
+# Create .env file
+AWS_ACCESS_KEY_ID=your_access_key_here
+AWS_SECRET_ACCESS_KEY=your_secret_key_here
+AWS_DEFAULT_REGION=us-east-1
+```
+
+#### **Step 3: Build the Chatbot Backend**
+```python
+# chatbot.py
 import boto3
 import json
-import streamlit as st
+from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+app = Flask(__name__)
 
 # Initialize Bedrock client
-@st.cache_resource
-def get_bedrock_client():
-    return boto3.client('bedrock-runtime', region_name='us-east-1')
+bedrock = boto3.client(
+    'bedrock-runtime',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.getenv('AWS_DEFAULT_REGION')
+)
 
-def chat_with_ai(message, conversation_history):
-    """Send message to AI and get response"""
-    bedrock = get_bedrock_client()
+class AIChatbot:
+    def __init__(self):
+        self.conversation_history = []
     
-    # Prepare messages for Claude
-    messages = conversation_history + [{"role": "user", "content": message}]
-    
-    try:
+    def generate_response(self, user_input):
+        """Generate AI response using Bedrock"""
+        
+        # Add user input to conversation history
+        self.conversation_history.append({"role": "user", "content": user_input})
+        
+        # Prepare the prompt with conversation context
+        prompt = self.build_prompt()
+        
+        try:
+            # Call Bedrock API
         response = bedrock.invoke_model(
             modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
             body=json.dumps({
                 'anthropic_version': 'bedrock-2023-05-31',
                 'max_tokens': 1000,
-                'messages': messages
+                    'messages': self.conversation_history
             })
         )
         
+            # Parse response
         result = json.loads(response['body'].read())
-        return result['content'][0]['text']
+            ai_response = result['content'][0]['text']
+            
+            # Add AI response to conversation history
+            self.conversation_history.append({"role": "assistant", "content": ai_response})
+            
+            return ai_response
     
     except Exception as e:
         return f"Sorry, I encountered an error: {str(e)}"
 
-# Streamlit UI
-def main():
-    st.title("🤖 My First AI Chatbot")
-    st.write("Chat with Claude using Amazon Bedrock!")
-    
-    # Initialize session state
-    if 'messages' not in st.session_state:
-        st.session_state.messages = []
-    
-    # Display chat history
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-    
-    # Chat input
-    if prompt := st.chat_input("What would you like to know?"):
-        # Add user message
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-        
-        # Get AI response
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                response = chat_with_ai(prompt, st.session_state.messages[:-1])
-                st.markdown(response)
-        
-        # Add AI response
-        st.session_state.messages.append({"role": "assistant", "content": response})
+    def build_prompt(self):
+        """Build conversation context"""
+        context = "You are a helpful AI assistant. Be friendly, informative, and engaging in your responses."
+        return context
 
-if __name__ == "__main__":
-    main()
+# Initialize chatbot
+chatbot = AIChatbot()
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json.get('message', '')
+    ai_response = chatbot.generate_response(user_message)
+    
+    return jsonify({
+        'response': ai_response,
+        'user_message': user_message
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)
 ```
 
-#### Step 3: Run Your Chatbot
+#### **Step 4: Create the Web Interface**
+```html
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .chat-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            text-align: right;
+        }
+        .ai-message {
+            background-color: #e9ecef;
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        #messageInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #sendButton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #sendButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>🤖 AI Chatbot</h1>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">
+                Hello! I'm your AI assistant. How can I help you today?
+            </div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="messageInput" placeholder="Type your message here..." />
+            <button id="sendButton" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
 
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            addTypingIndicator();
+            
+            // Send message to backend
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                removeTypingIndicator();
+                addMessage(data.response, 'ai');
+            })
+            .catch(error => {
+                removeTypingIndicator();
+                addMessage('Sorry, I encountered an error. Please try again.', 'ai');
+            });
+        }
+        
+        function addMessage(message, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message ai-message';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.textContent = 'AI is typing...';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+        
+        // Allow sending message with Enter key
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
+```
+
+#### **Step 5: Test Your Chatbot**
 ```bash
 # Run the application
-streamlit run chatbot.py
+python chatbot.py
+
+# Open your browser and go to:
+# http://localhost:5000
 ```
 
-#### Step 4: Test Your Chatbot
+### 🎯 **Lab 1 Success Criteria**
+- [ ] Chatbot responds to user messages
+- [ ] Conversation history is maintained
+- [ ] Web interface is user-friendly
+- [ ] Error handling works properly
+- [ ] You can have a meaningful conversation
 
-Try these conversation starters:
-- "Hello! What can you help me with?"
-- "Tell me a joke"
-- "Explain quantum computing in simple terms"
-- "Help me write a short story about a robot"
+### 🏆 **Lab 1 Achievement**
+**🎉 Congratulations! You've built your first AI application!**
 
-### 🎮 Interactive Challenge: Enhance Your Chatbot
+**What you've accomplished:**
+- ✅ Integrated Amazon Bedrock with Python
+- ✅ Built a web application with Flask
+- ✅ Created an interactive user interface
+- ✅ Implemented conversation management
+- ✅ Added error handling and user feedback
 
-**Add these features to make your chatbot even better:**
+---
 
-1. **🎨 Personality Selection**
-   - Add buttons to choose different AI personalities
-   - Professional, Friendly, Creative, Technical
+## 🎨 Lab 2: AI Image Generator - Create Art with AI
 
-2. **📝 Conversation Memory**
-   - Make the AI remember previous messages
-   - Add a "Clear History" button
+### 🎯 **Lab Objective**
+Build an AI-powered image generator that can create images from text descriptions using AWS AI services.
 
-3. **🎯 Specialized Modes**
-   - Code Helper: "Help me write Python code"
-   - Creative Writer: "Write a poem about..."
-   - Problem Solver: "Help me solve this math problem"
+### 📚 **What You'll Learn**
+- How to use AI for image generation
+- File handling and image processing
+- Advanced web interface development
+- API integration with image services
 
-### 🏆 Lab 1 Complete!
+### 🛠️ **Technologies Used**
+- **Amazon Bedrock**: For AI image generation
+- **Python Flask**: For web application
+- **HTML/CSS/JavaScript**: For user interface
+- **PIL (Pillow)**: For image processing
 
-**Congratulations! You've built your first AI application!**
+### 📋 **Lab Steps**
 
-**What you learned:**
-- ✅ How to use Amazon Bedrock
-- ✅ How to integrate AI into a web application
-- ✅ How to handle user interactions
-- ✅ How to manage conversation state
+#### **Step 1: Set Up Image Generation Project**
+```bash
+# Create project directory
+mkdir ai-image-generator
+cd ai-image-generator
 
-**Badge Earned:** 🥉 **Chatbot Builder**
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate
 
-## 🛠️ Lab 2: Image Generator with AI
-
-### 🎯 Project Overview
-
-Create an application that generates images based on text descriptions using AI. This will showcase the creative power of generative AI!
-
-### 🎨 What You'll Build
-
-```mermaid
-graph LR
-    A[👤 User Input] --> B[📝 Text Prompt]
-    B --> C[☁️ Amazon Bedrock]
-    C --> D[🎨 Image Generation Model]
-    D --> E[🖼️ Generated Image]
-    E --> F[📱 Display Interface]
-    
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#f3e5f5
-    style E fill:#c8e6c9
-    style F fill:#fce4ec
+# Install required packages
+pip install boto3 flask python-dotenv pillow
 ```
 
-### 🚀 Step-by-Step Guide
-
-#### Step 1: Set Up Image Generation
-
-Create `image_generator.py`:
-
+#### **Step 2: Build the Image Generator Backend**
 ```python
+# image_generator.py
 import boto3
 import json
-import streamlit as st
-from PIL import Image
-import io
 import base64
+import io
+from flask import Flask, render_template, request, jsonify, send_file
+from dotenv import load_dotenv
+import os
+from PIL import Image
+
+load_dotenv()
+
+app = Flask(__name__)
 
 # Initialize Bedrock client
-@st.cache_resource
-def get_bedrock_client():
-    return boto3.client('bedrock-runtime', region_name='us-east-1')
+bedrock = boto3.client(
+    'bedrock-runtime',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.getenv('AWS_DEFAULT_REGION')
+)
 
-def generate_image(prompt, style="realistic"):
-    """Generate image using AI"""
-    bedrock = get_bedrock_client()
+class AIImageGenerator:
+    def __init__(self):
+        self.generation_history = []
     
-    # Enhanced prompt with style
-    enhanced_prompt = f"Create a {style} image: {prompt}"
-    
-    try:
-        # Use Claude to generate image description first
+    def generate_image(self, prompt, style="realistic", size="1024x1024"):
+        """Generate AI image from text prompt"""
+        
+        try:
+            # Enhanced prompt with style
+            enhanced_prompt = self.enhance_prompt(prompt, style)
+            
+            # Call Bedrock for image generation
         response = bedrock.invoke_model(
-            modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
+                modelId='amazon.titan-image-generator-v1',
             body=json.dumps({
-                'anthropic_version': 'bedrock-2023-05-31',
-                'max_tokens': 500,
-                'messages': [{
-                    'role': 'user', 
-                    'content': f"Describe a detailed image: {enhanced_prompt}"
-                }]
-            })
-        )
-        
+                    'taskType': 'TEXT_IMAGE',
+                    'textToImageParams': {
+                        'text': enhanced_prompt,
+                        'negativeText': 'blurry, low quality, distorted'
+                    },
+                    'imageGenerationConfig': {
+                        'numberOfImages': 1,
+                        'quality': 'premium',
+                        'width': int(size.split('x')[0]),
+                        'height': int(size.split('x')[1]),
+                        'cfgScale': 8.0,
+                        'seed': 42
+                    }
+                })
+            )
+            
+            # Parse response
         result = json.loads(response['body'].read())
-        image_description = result['content'][0]['text']
+            
+            # Extract base64 image
+            base64_image = result['images'][0]
+            image_data = base64.b64decode(base64_image)
+            
+            # Save generation to history
+            generation_record = {
+                'prompt': prompt,
+                'style': style,
+                'size': size,
+                'timestamp': str(datetime.now())
+            }
+            self.generation_history.append(generation_record)
+            
+            return image_data
+            
+        except Exception as e:
+            raise Exception(f"Image generation failed: {str(e)}")
+    
+    def enhance_prompt(self, prompt, style):
+        """Enhance prompt with style instructions"""
+        style_enhancements = {
+            'realistic': 'photorealistic, high quality, detailed',
+            'artistic': 'artistic, creative, stylized, beautiful',
+            'cartoon': 'cartoon style, colorful, fun, animated',
+            'abstract': 'abstract, modern, artistic, creative',
+            'vintage': 'vintage style, retro, classic, nostalgic'
+        }
         
-        return image_description, "Image generation completed!"
-    
-    except Exception as e:
-        return None, f"Error: {str(e)}"
+        enhancement = style_enhancements.get(style, 'high quality, detailed')
+        return f"{prompt}, {enhancement}"
 
-def main():
-    st.title("🎨 AI Image Generator")
-    st.write("Describe an image and let AI create it for you!")
-    
-    # Style selection
-    style = st.selectbox(
-        "Choose image style:",
-        ["realistic", "cartoon", "abstract", "watercolor", "digital art"]
-    )
-    
-    # Prompt input
-    prompt = st.text_area(
-        "Describe the image you want to create:",
-        placeholder="A beautiful sunset over mountains with a lake in the foreground..."
-    )
-    
-    # Generate button
-    if st.button("🎨 Generate Image"):
-        if prompt:
-            with st.spinner("Creating your image..."):
-                image_desc, status = generate_image(prompt, style)
-                
-                if image_desc:
-                    st.success("Image description generated!")
-                    st.write("**AI-Generated Description:**")
-                    st.write(image_desc)
-                    
-                    # Note: For actual image generation, you'd use a service like DALL-E
-                    # This is a simplified version that generates descriptions
-                    st.info("💡 In a full implementation, this would generate an actual image!")
-                else:
-                    st.error(status)
-        else:
-            st.warning("Please enter a description for your image.")
+# Initialize image generator
+image_generator = AIImageGenerator()
 
-if __name__ == "__main__":
-    main()
-```
+@app.route('/')
+def home():
+    return render_template('image_generator.html')
 
-#### Step 2: Add Image Analysis
-
-Enhance your app with image analysis:
-
-```python
-import boto3
-
-def analyze_image(image_file):
-    """Analyze uploaded image using Amazon Rekognition"""
-    rekognition = boto3.client('rekognition', region_name='us-east-1')
-    
+@app.route('/generate', methods=['POST'])
+def generate_image():
     try:
-        # Detect objects in the image
-        response = rekognition.detect_labels(
-            Image={'Bytes': image_file.read()},
-            MaxLabels=10,
-            MinConfidence=70
-        )
+        data = request.json
+        prompt = data.get('prompt', '')
+        style = data.get('style', 'realistic')
+        size = data.get('size', '1024x1024')
         
-        labels = [label['Name'] for label in response['Labels']]
-        return labels
+        if not prompt:
+            return jsonify({'error': 'Prompt is required'}), 400
+        
+        # Generate image
+        image_data = image_generator.generate_image(prompt, style, size)
+        
+        # Convert to base64 for web display
+        base64_image = base64.b64encode(image_data).decode('utf-8')
+        
+        return jsonify({
+            'success': True,
+            'image': base64_image,
+            'prompt': prompt,
+            'style': style,
+            'size': size
+        })
     
     except Exception as e:
-        return [f"Error analyzing image: {str(e)}"]
+        return jsonify({'error': str(e)}), 500
 
-# Add to your Streamlit app
-uploaded_file = st.file_uploader("Or upload an image to analyze:", type=['jpg', 'png', 'jpeg'])
+@app.route('/history')
+def get_history():
+    return jsonify(image_generator.generation_history)
 
-if uploaded_file:
-    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
-    
-    if st.button("🔍 Analyze Image"):
-        with st.spinner("Analyzing image..."):
-            labels = analyze_image(uploaded_file)
-            st.write("**Detected objects:**")
-            for label in labels:
-                st.write(f"• {label}")
+if __name__ == '__main__':
+    app.run(debug=True)
 ```
 
-### 🎮 Interactive Challenge: Advanced Features
+#### **Step 3: Create the Image Generator Interface**
+```html
+<!-- templates/image_generator.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .input-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .result-section {
+            text-align: center;
+        }
+        .generated-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 AI Image Generator</h1>
+        
+        <div class="input-section">
+            <div class="form-group">
+                <label for="prompt">Describe the image you want to create:</label>
+                <input type="text" id="prompt" placeholder="e.g., A beautiful sunset over mountains with a lake in the foreground" />
+            </div>
+            
+            <div class="form-group">
+                <label for="style">Art Style:</label>
+                <select id="style">
+                    <option value="realistic">Realistic</option>
+                    <option value="artistic">Artistic</option>
+                    <option value="cartoon">Cartoon</option>
+                    <option value="abstract">Abstract</option>
+                    <option value="vintage">Vintage</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="size">Image Size:</label>
+                <select id="size">
+                    <option value="1024x1024">1024x1024 (Square)</option>
+                    <option value="1024x768">1024x768 (Landscape)</option>
+                    <option value="768x1024">768x1024 (Portrait)</option>
+                </select>
+            </div>
+            
+            <button class="generate-btn" onclick="generateImage()">Generate Image</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Creating your image... This may take a few moments.</p>
+        </div>
+        
+        <div class="result-section" id="resultSection" style="display: none;">
+            <div id="message"></div>
+            <img id="generatedImage" class="generated-image" />
+            <div id="imageInfo"></div>
+        </div>
+    </div>
 
-**Make your image generator even more powerful:**
-
-1. **🎨 Style Transfer**
-   - Add options to apply different art styles
-   - Van Gogh, Picasso, Modern, etc.
-
-2. **🖼️ Image Variations**
-   - Generate multiple variations of the same prompt
-   - Let users choose their favorite
-
-3. **📱 Mobile-Friendly**
-   - Optimize the interface for mobile devices
-   - Add touch-friendly controls
-
-### 🏆 Lab 2 Complete!
-
-**Congratulations! You've built an AI image generator!**
-
-**What you learned:**
-- ✅ How to generate creative content with AI
-- ✅ How to integrate multiple AI services
-- ✅ How to handle file uploads and processing
-- ✅ How to create engaging user interfaces
-
-**Badge Earned:** 🥈 **Image Creator**
-
-## 🛠️ Lab 3: Text Analysis Tool
-
-### 🎯 Project Overview
-
-Build a comprehensive text analysis tool that can analyze sentiment, extract entities, and summarize text using Amazon Comprehend.
-
-### 📊 What You'll Build
-
-```mermaid
-graph TD
-    A[📝 Input Text] --> B[🔍 Text Analyzer]
-    B --> C[😊 Sentiment Analysis]
-    B --> D[🏷️ Entity Recognition]
-    B --> E[🔑 Key Phrases]
-    B --> F[📄 Text Summary]
-    
-    C --> G[📊 Sentiment Score]
-    D --> H[👥 People, Places, Organizations]
-    E --> I[🎯 Important Topics]
-    F --> J[📋 Summary Text]
-    
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#f3e5f5
-    style E fill:#fce4ec
-    style F fill:#e0f2f1
+    <script>
+        async function generateImage() {
+            const prompt = document.getElementById('prompt').value.trim();
+            const style = document.getElementById('style').value;
+            const size = document.getElementById('size').value;
+            
+            if (!prompt) {
+                showMessage('Please enter a description for your image.', 'error');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
+            document.querySelector('.generate-btn').disabled = true;
+            
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        style: style,
+                        size: size
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Display generated image
+                    const imageElement = document.getElementById('generatedImage');
+                    imageElement.src = 'data:image/png;base64,' + data.image;
+                    
+                    // Show image info
+                    document.getElementById('imageInfo').innerHTML = `
+                        <p><strong>Prompt:</strong> ${data.prompt}</p>
+                        <p><strong>Style:</strong> ${data.style}</p>
+                        <p><strong>Size:</strong> ${data.size}</p>
+                    `;
+                    
+                    showMessage('Image generated successfully!', 'success');
+                    document.getElementById('resultSection').style.display = 'block';
+                } else {
+                    showMessage(data.error || 'Failed to generate image', 'error');
+                }
+                
+            } catch (error) {
+                showMessage('Error generating image: ' + error.message, 'error');
+            } finally {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                document.querySelector('.generate-btn').disabled = false;
+            }
+        }
+        
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = type;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+        }
+        
+        // Allow generating with Enter key
+        document.getElementById('prompt').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateImage();
+            }
+        });
+    </script>
+</body>
+</html>
 ```
 
-### 🚀 Step-by-Step Guide
+### 🎯 **Lab 2 Success Criteria**
+- [ ] Can generate images from text descriptions
+- [ ] Different art styles work correctly
+- [ ] Various image sizes are supported
+- [ ] Loading states and error handling work
+- [ ] Generated images are displayed properly
 
-#### Step 1: Create the Text Analyzer
+### 🏆 **Lab 2 Achievement**
+**🎨 Congratulations! You've built an AI image generator!**
 
-Create `text_analyzer.py`:
+**What you've accomplished:**
+- ✅ Integrated AI image generation with Bedrock
+- ✅ Built an advanced web interface
+- ✅ Implemented multiple art styles
+- ✅ Added proper loading and error states
+- ✅ Created a user-friendly image generation tool
 
+---
+
+## 📊 Lab 3: AI Text Analyzer - Understanding Content with AI
+
+### 🎯 **Lab Objective**
+Build an AI-powered text analyzer that can analyze sentiment, extract entities, detect language, and provide insights about any text content.
+
+### 📚 **What You'll Learn**
+- How to use Amazon Comprehend for text analysis
+- Data visualization with charts
+- Advanced JavaScript for interactive features
+- Text processing and analysis techniques
+
+### 🛠️ **Technologies Used**
+- **Amazon Comprehend**: For text analysis
+- **Python Flask**: For backend API
+- **Chart.js**: For data visualization
+- **HTML/CSS/JavaScript**: For interactive interface
+
+### 📋 **Lab Steps**
+
+#### **Step 1: Set Up Text Analysis Project**
+```bash
+# Create project directory
+mkdir ai-text-analyzer
+cd ai-text-analyzer
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# Install required packages
+pip install boto3 flask python-dotenv
+```
+
+#### **Step 2: Build the Text Analyzer Backend**
 ```python
+# text_analyzer.py
 import boto3
-import streamlit as st
-import pandas as pd
-import plotly.express as px
+import json
+from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+app = Flask(__name__)
 
 # Initialize Comprehend client
-@st.cache_resource
-def get_comprehend_client():
-    return boto3.client('comprehend', region_name='us-east-1')
+comprehend = boto3.client(
+    'comprehend',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.getenv('AWS_DEFAULT_REGION')
+)
 
-def analyze_sentiment(text):
-    """Analyze sentiment of text"""
-    comprehend = get_comprehend_client()
+class AITextAnalyzer:
+    def __init__(self):
+        self.analysis_history = []
     
-    try:
-        response = comprehend.detect_sentiment(Text=text, LanguageCode='en')
-        return response
-    except Exception as e:
-        return {"Error": str(e)}
-
-def extract_entities(text):
-    """Extract entities from text"""
-    comprehend = get_comprehend_client()
-    
-    try:
-        response = comprehend.detect_entities(Text=text, LanguageCode='en')
-        return response['Entities']
-    except Exception as e:
-        return [{"Error": str(e)}]
-
-def extract_key_phrases(text):
-    """Extract key phrases from text"""
-    comprehend = get_comprehend_client()
-    
-    try:
-        response = comprehend.detect_key_phrases(Text=text, LanguageCode='en')
-        return response['KeyPhrases']
-    except Exception as e:
-        return [{"Error": str(e)}]
-
-def summarize_text(text):
-    """Summarize text using AI"""
-    # This is a simplified version - in practice, you'd use a summarization model
-    sentences = text.split('. ')
-    summary = '. '.join(sentences[:3]) + '.'
-    return summary
-
-def main():
-    st.title("📊 AI Text Analysis Tool")
-    st.write("Analyze any text with the power of AI!")
-    
-    # Text input
-    text = st.text_area(
-        "Enter text to analyze:",
-        placeholder="Paste your text here...",
-        height=200
-    )
-    
-    if st.button("🔍 Analyze Text"):
-        if text:
-            # Create tabs for different analyses
-            tab1, tab2, tab3, tab4 = st.tabs(["😊 Sentiment", "🏷️ Entities", "🔑 Key Phrases", "📄 Summary"])
+    def analyze_text(self, text):
+        """Comprehensive text analysis using Amazon Comprehend"""
+        
+        if len(text) < 1:
+            raise ValueError("Text must be at least 1 character long")
+        
+        if len(text) > 5000:
+            raise ValueError("Text must be less than 5000 characters")
+        
+        try:
+            # Detect language
+            language_response = comprehend.detect_dominant_language(Text=text)
+            dominant_language = language_response['Languages'][0]['LanguageCode']
             
-            with tab1:
-                st.subheader("Sentiment Analysis")
-                sentiment = analyze_sentiment(text)
-                
-                if "Error" not in sentiment:
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.metric("Sentiment", sentiment['Sentiment'])
-                        st.metric("Confidence", f"{sentiment['SentimentScore'][sentiment['Sentiment']]:.2%}")
-                    
-                    with col2:
-                        # Create sentiment chart
-                        scores = sentiment['SentimentScore']
-                        fig = px.pie(
-                            values=list(scores.values()),
-                            names=list(scores.keys()),
-                            title="Sentiment Distribution"
-                        )
-                        st.plotly_chart(fig, use_container_width=True)
-                else:
-                    st.error(sentiment["Error"])
+            # Sentiment analysis
+            sentiment_response = comprehend.detect_sentiment(
+                Text=text, 
+                LanguageCode=dominant_language
+            )
             
-            with tab2:
-                st.subheader("Entity Recognition")
-                entities = extract_entities(text)
-                
-                if entities and "Error" not in entities[0]:
-                    # Create entities table
-                    df = pd.DataFrame(entities)
-                    st.dataframe(df[['Text', 'Type', 'Score']], use_container_width=True)
-                    
-                    # Entity type distribution
-                    entity_counts = df['Type'].value_counts()
-                    fig = px.bar(x=entity_counts.index, y=entity_counts.values, title="Entity Types")
-                    st.plotly_chart(fig, use_container_width=True)
-                else:
-                    st.error("Error extracting entities")
+            # Entity recognition
+            entities_response = comprehend.detect_entities(
+                Text=text, 
+                LanguageCode=dominant_language
+            )
             
-            with tab3:
-                st.subheader("Key Phrases")
-                phrases = extract_key_phrases(text)
-                
-                if phrases and "Error" not in phrases[0]:
-                    # Display key phrases
-                    for i, phrase in enumerate(phrases, 1):
-                        st.write(f"{i}. **{phrase['Text']}** (Score: {phrase['Score']:.2f})")
-                else:
-                    st.error("Error extracting key phrases")
+            # Key phrases extraction
+            key_phrases_response = comprehend.detect_key_phrases(
+                Text=text, 
+                LanguageCode=dominant_language
+            )
             
-            with tab4:
-                st.subheader("Text Summary")
-                summary = summarize_text(text)
-                st.write("**AI-Generated Summary:**")
-                st.write(summary)
-                
-                # Word count comparison
-                original_words = len(text.split())
-                summary_words = len(summary.split())
-                compression_ratio = (1 - summary_words / original_words) * 100
-                
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("Original Words", original_words)
-                with col2:
-                    st.metric("Summary Words", summary_words)
-                with col3:
-                    st.metric("Compression", f"{compression_ratio:.1f}%")
-        else:
-            st.warning("Please enter some text to analyze.")
-
-if __name__ == "__main__":
-    main()
-```
-
-### 🎮 Interactive Challenge: Advanced Analysis
-
-**Add these advanced features:**
-
-1. **📈 Trend Analysis**
-   - Analyze sentiment over time
-   - Track changes in topics
-
-2. **🌍 Language Detection**
-   - Detect the language of input text
-   - Support multiple languages
-
-3. **📊 Custom Dashboards**
-   - Create interactive visualizations
-   - Export analysis results
-
-### 🏆 Lab 3 Complete!
-
-**Congratulations! You've built a comprehensive text analysis tool!**
-
-**What you learned:**
-- ✅ How to use Amazon Comprehend
-- ✅ How to create data visualizations
-- ✅ How to build multi-tab interfaces
-- ✅ How to handle different types of analysis
-
-**Badge Earned:** 🥇 **Text Analyst**
-
-## 🛠️ Lab 4: Voice-Enabled Application
-
-### 🎯 Project Overview
-
-Create a voice-enabled application that can listen to speech, process it with AI, and respond with synthesized speech.
-
-### 🎤 What You'll Build
-
-```mermaid
-graph LR
-    A[🎤 Voice Input] --> B[☁️ Amazon Transcribe]
-    B --> C[📝 Text Processing]
-    C --> D[🤖 AI Response]
-    D --> E[☁️ Amazon Polly]
-    E --> F[🔊 Voice Output]
+            # Syntax analysis
+            syntax_response = comprehend.detect_syntax(
+                Text=text, 
+                LanguageCode=dominant_language
+            )
+            
+            # Compile analysis results
+            analysis_result = {
+                'text': text,
+                'language': {
+                    'code': dominant_language,
+                    'confidence': language_response['Languages'][0]['Score']
+                },
+                'sentiment': {
+                    'overall': sentiment_response['Sentiment'],
+                    'scores': sentiment_response['SentimentScore']
+                },
+                'entities': [
+                    {
+                        'text': entity['Text'],
+                        'type': entity['Type'],
+                        'confidence': entity['Score']
+                    }
+                    for entity in entities_response['Entities']
+                ],
+                'key_phrases': [
+                    {
+                        'text': phrase['Text'],
+                        'confidence': phrase['Score']
+                    }
+                    for phrase in key_phrases_response['KeyPhrases']
+                ],
+                'syntax': [
+                    {
+                        'token': token['Text'],
+                        'part_of_speech': token['PartOfSpeech']['Tag'],
+                        'confidence': token['PartOfSpeech']['Score']
+                    }
+                    for token in syntax_response['SyntaxTokens']
+                ],
+                'statistics': self.calculate_text_statistics(text)
+            }
+            
+            # Save to history
+            self.analysis_history.append(analysis_result)
+            
+            return analysis_result
+            
+        except Exception as e:
+            raise Exception(f"Text analysis failed: {str(e)}")
     
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#f3e5f5
-    style E fill:#fce4ec
-    style F fill:#c8e6c9
-```
-
-### 🚀 Step-by-Step Guide
-
-#### Step 1: Create the Voice App
-
-Create `voice_app.py`:
-
-```python
-import boto3
-import streamlit as st
-import json
-import io
-import base64
-
-# Initialize AWS clients
-@st.cache_resource
-def get_aws_clients():
+    def calculate_text_statistics(self, text):
+        """Calculate basic text statistics"""
+        words = text.split()
+        sentences = text.split('.')
+        
     return {
-        'transcribe': boto3.client('transcribe', region_name='us-east-1'),
-        'polly': boto3.client('polly', region_name='us-east-1'),
-        'bedrock': boto3.client('bedrock-runtime', region_name='us-east-1')
-    }
+            'character_count': len(text),
+            'word_count': len(words),
+            'sentence_count': len([s for s in sentences if s.strip()]),
+            'average_word_length': sum(len(word) for word in words) / len(words) if words else 0,
+            'reading_time_minutes': len(words) / 200  # Average reading speed
+        }
 
-def transcribe_audio(audio_file):
-    """Convert speech to text"""
-    clients = get_aws_clients()
-    
+# Initialize text analyzer
+text_analyzer = AITextAnalyzer()
+
+@app.route('/')
+def home():
+    return render_template('text_analyzer.html')
+
+@app.route('/analyze', methods=['POST'])
+def analyze_text():
     try:
-        # For demo purposes, we'll simulate transcription
-        # In a real app, you'd upload to S3 and use Transcribe
-        return "Hello, this is a demo transcription. In a real application, this would be the actual transcribed text from your audio file."
-    except Exception as e:
-        return f"Error transcribing audio: {str(e)}"
-
-def generate_ai_response(text):
-    """Generate AI response to text"""
-    clients = get_aws_clients()
-    
-    try:
-        response = clients['bedrock'].invoke_model(
-            modelId='anthropic.claude-3-5-sonnet-20241022-v2:0',
-            body=json.dumps({
-                'anthropic_version': 'bedrock-2023-05-31',
-                'max_tokens': 500,
-                'messages': [{'role': 'user', 'content': text}]
-            })
-        )
+        data = request.json
+        text = data.get('text', '').strip()
         
-        result = json.loads(response['body'].read())
-        return result['content'][0]['text']
-    except Exception as e:
-        return f"Error generating response: {str(e)}"
-
-def text_to_speech(text, voice_id='Joanna'):
-    """Convert text to speech"""
-    clients = get_aws_clients()
-    
-    try:
-        response = clients['polly'].synthesize_speech(
-            Text=text,
-            OutputFormat='mp3',
-            VoiceId=voice_id,
-            Engine='neural'
-        )
+        if not text:
+            return jsonify({'error': 'Text is required'}), 400
         
-        return response['AudioStream'].read()
-    except Exception as e:
-        return None
-
-def main():
-    st.title("🎤 AI Voice Assistant")
-    st.write("Upload an audio file or type text to interact with AI!")
-    
-    # Voice selection
-    voice = st.selectbox(
-        "Choose voice:",
-        ['Joanna', 'Matthew', 'Amy', 'Brian', 'Emma']
-    )
-    
-    # Audio upload
-    st.subheader("🎤 Upload Audio File")
-    audio_file = st.file_uploader(
-        "Upload an audio file (WAV, MP3, M4A):",
-        type=['wav', 'mp3', 'm4a']
-    )
-    
-    if audio_file:
-        st.audio(audio_file, format='audio/wav')
+        # Analyze text
+        analysis_result = text_analyzer.analyze_text(text)
         
-        if st.button("🎤 Transcribe & Respond"):
-            with st.spinner("Processing audio..."):
-                # Transcribe audio
-                transcribed_text = transcribe_audio(audio_file)
-                st.write("**Transcribed Text:**")
-                st.write(transcribed_text)
-                
-                # Generate AI response
-                ai_response = generate_ai_response(transcribed_text)
-                st.write("**AI Response:**")
-                st.write(ai_response)
-                
-                # Convert to speech
-                audio_data = text_to_speech(ai_response, voice)
-                if audio_data:
-                    st.audio(audio_data, format='audio/mp3')
-                else:
-                    st.error("Error generating speech")
-    
-    # Text input alternative
-    st.subheader("💬 Or Type Your Message")
-    text_input = st.text_area("Type your message here:")
-    
-    if st.button("🤖 Generate Response"):
-        if text_input:
-            with st.spinner("Generating response..."):
-                ai_response = generate_ai_response(text_input)
-                st.write("**AI Response:**")
-                st.write(ai_response)
-                
-                # Convert to speech
-                audio_data = text_to_speech(ai_response, voice)
-                if audio_data:
-                    st.audio(audio_data, format='audio/mp3')
-                else:
-                    st.error("Error generating speech")
+        return jsonify({
+            'success': True,
+            'analysis': analysis_result
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-if __name__ == "__main__":
-    main()
+@app.route('/history')
+def get_history():
+    return jsonify(text_analyzer.analysis_history)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 ```
 
-### 🎮 Interactive Challenge: Voice Features
+#### **Step 3: Create the Text Analyzer Interface**
+```html
+<!-- templates/text_analyzer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Analyzer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .input-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #74b9ff;
+        }
+        .analyze-btn {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+        }
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .results-section {
+            display: none;
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .analysis-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #74b9ff;
+        }
+        .analysis-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .sentiment-chart {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .entity-tag {
+            display: inline-block;
+            background: #74b9ff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            font-size: 12px;
+        }
+        .key-phrase {
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            display: inline-block;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #74b9ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 AI Text Analyzer</h1>
+        
+        <div class="input-section">
+            <label for="textInput">Enter text to analyze:</label>
+            <textarea id="textInput" placeholder="Paste or type any text here for AI analysis..."></textarea>
+            <button class="analyze-btn" onclick="analyzeText()">Analyze Text</button>
+        </div>
+        
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analyzing your text... This may take a few moments.</p>
+        </div>
+        
+        <div class="results-section" id="resultsSection">
+            <div id="message"></div>
+            <div class="analysis-grid" id="analysisGrid"></div>
+        </div>
+    </div>
 
-**Add these advanced voice features:**
+    <script>
+        async function analyzeText() {
+            const text = document.getElementById('textInput').value.trim();
+            
+            if (!text) {
+                showMessage('Please enter some text to analyze.', 'error');
+                return;
+            }
+            
+            if (text.length > 5000) {
+                showMessage('Text must be less than 5000 characters.', 'error');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.querySelector('.analyze-btn').disabled = true;
+            
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayAnalysis(data.analysis);
+                    showMessage('Text analysis completed successfully!', 'success');
+                } else {
+                    showMessage(data.error || 'Failed to analyze text', 'error');
+                }
+                
+            } catch (error) {
+                showMessage('Error analyzing text: ' + error.message, 'error');
+            } finally {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                document.querySelector('.analyze-btn').disabled = false;
+            }
+        }
+        
+        function displayAnalysis(analysis) {
+            const grid = document.getElementById('analysisGrid');
+            grid.innerHTML = '';
+            
+            // Language Detection
+            const languageCard = createCard('Language Detection', `
+                <p><strong>Detected Language:</strong> ${analysis.language.code}</p>
+                <p><strong>Confidence:</strong> ${(analysis.language.confidence * 100).toFixed(1)}%</p>
+            `);
+            grid.appendChild(languageCard);
+            
+            // Sentiment Analysis
+            const sentimentCard = createCard('Sentiment Analysis', `
+                <p><strong>Overall Sentiment:</strong> <span style="color: ${getSentimentColor(analysis.sentiment.overall)}">${analysis.sentiment.overall}</span></p>
+                <div class="sentiment-chart">
+                    <canvas id="sentimentChart" width="300" height="200"></canvas>
+                </div>
+            `);
+            grid.appendChild(sentimentCard);
+            
+            // Text Statistics
+            const statsCard = createCard('Text Statistics', `
+                <p><strong>Characters:</strong> ${analysis.statistics.character_count}</p>
+                <p><strong>Words:</strong> ${analysis.statistics.word_count}</p>
+                <p><strong>Sentences:</strong> ${analysis.statistics.sentence_count}</p>
+                <p><strong>Average Word Length:</strong> ${analysis.statistics.average_word_length.toFixed(1)} characters</p>
+                <p><strong>Reading Time:</strong> ${analysis.statistics.reading_time_minutes.toFixed(1)} minutes</p>
+            `);
+            grid.appendChild(statsCard);
+            
+            // Entities
+            if (analysis.entities.length > 0) {
+                const entitiesCard = createCard('Named Entities', `
+                    ${analysis.entities.map(entity => 
+                        `<span class="entity-tag" title="${entity.type} (${(entity.confidence * 100).toFixed(1)}%)">${entity.text}</span>`
+                    ).join('')}
+                `);
+                grid.appendChild(entitiesCard);
+            }
+            
+            // Key Phrases
+            if (analysis.key_phrases.length > 0) {
+                const phrasesCard = createCard('Key Phrases', `
+                    ${analysis.key_phrases.map(phrase => 
+                        `<span class="key-phrase" title="Confidence: ${(phrase.confidence * 100).toFixed(1)}%">${phrase.text}</span>`
+                    ).join('')}
+                `);
+                grid.appendChild(phrasesCard);
+            }
+            
+            // Show results
+            document.getElementById('resultsSection').style.display = 'block';
+            
+            // Create sentiment chart
+            createSentimentChart(analysis.sentiment.scores);
+        }
+        
+        function createCard(title, content) {
+            const card = document.createElement('div');
+            card.className = 'analysis-card';
+            card.innerHTML = `<h3>${title}</h3>${content}`;
+            return card;
+        }
+        
+        function getSentimentColor(sentiment) {
+            switch(sentiment) {
+                case 'POSITIVE': return '#28a745';
+                case 'NEGATIVE': return '#dc3545';
+                case 'NEUTRAL': return '#6c757d';
+                case 'MIXED': return '#ffc107';
+                default: return '#6c757d';
+            }
+        }
+        
+        function createSentimentChart(scores) {
+            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Positive', 'Negative', 'Neutral', 'Mixed'],
+                    datasets: [{
+                        data: [
+                            (scores.Positive * 100).toFixed(1),
+                            (scores.Negative * 100).toFixed(1),
+                            (scores.Neutral * 100).toFixed(1),
+                            (scores.Mixed * 100).toFixed(1)
+                        ],
+                        backgroundColor: ['#28a745', '#dc3545', '#6c757d', '#ffc107']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = type;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+```
 
-1. **🎙️ Real-time Recording**
-   - Record audio directly in the browser
-   - Process speech in real-time
+### 🎯 **Lab 3 Success Criteria**
+- [ ] Can analyze text sentiment accurately
+- [ ] Detects language correctly
+- [ ] Extracts entities and key phrases
+- [ ] Displays statistics and visualizations
+- [ ] Handles errors gracefully
 
-2. **🗣️ Multiple Languages**
-   - Support different languages
-   - Automatic language detection
+### 🏆 **Lab 3 Achievement**
+**📊 Congratulations! You've built an AI text analyzer!**
 
-3. **🎵 Voice Customization**
-   - Adjust speech rate and pitch
-   - Choose different voice styles
-
-### 🏆 Lab 4 Complete!
-
-**Congratulations! You've built a voice-enabled AI application!**
-
-**What you learned:**
-- ✅ How to use Amazon Transcribe and Polly
-- ✅ How to handle audio files
-- ✅ How to create voice-enabled interfaces
-- ✅ How to integrate multiple AI services
-
-**Badge Earned:** 🎤 **Voice Master**
-
-## 🏆 Lab 5: Capstone Project
-
-### 🎯 Project Overview
-
-Build a comprehensive multi-modal AI application that combines all the skills you've learned. This will be your portfolio piece!
-
-### 🌟 Project Ideas
-
-Choose one of these exciting projects:
-
-#### 1. **🤖 AI Personal Assistant**
-- Voice commands and responses
-- Text and image analysis
-- Task management and reminders
-- Weather and news updates
-
-#### 2. **🎨 Creative AI Studio**
-- Generate images from text descriptions
-- Analyze and modify existing images
-- Create stories and poems
-- Generate music and sound effects
-
-#### 3. **📊 Business Intelligence Tool**
-- Analyze customer feedback
-- Generate reports and summaries
-- Create data visualizations
-- Predict trends and patterns
-
-#### 4. **🎓 Educational AI Tutor**
-- Answer student questions
-- Generate practice problems
-- Analyze learning progress
-- Create personalized content
-
-### 🚀 Project Requirements
-
-Your capstone project must include:
-
-- ✅ **Multiple AI Services** - Use at least 3 different AWS AI services
-- ✅ **User Interface** - Clean, intuitive web interface
-- ✅ **Real Functionality** - Actually works, not just a demo
-- ✅ **Documentation** - Clear instructions and code comments
-- ✅ **Deployment** - Deployed and accessible online
-
-### 🎮 Project Development Process
-
-#### Phase 1: Planning (Day 1)
-- Choose your project idea
-- Define features and requirements
-- Create wireframes and mockups
-- Set up development environment
-
-#### Phase 2: Development (Days 2-3)
-- Build core functionality
-- Integrate AI services
-- Create user interface
-- Test and debug
-
-#### Phase 3: Enhancement (Day 4)
-- Add advanced features
-- Improve user experience
-- Optimize performance
-- Add error handling
-
-#### Phase 4: Deployment (Day 5)
-- Deploy to cloud platform
-- Test in production environment
-- Create documentation
-- Prepare presentation
-
-### 🏆 Capstone Project Complete!
-
-**Congratulations! You've built a comprehensive AI application!**
-
-**What you've achieved:**
-- ✅ **Full-Stack AI Developer** - Built complete applications
-- ✅ **AWS AI Expert** - Mastered multiple AI services
-- ✅ **Problem Solver** - Created real-world solutions
-- ✅ **Portfolio Ready** - Have projects to showcase
-
-**Badge Earned:** 🏆 **AI Developer Master**
-
-## 🎉 Module Complete!
-
-### 🏆 Final Achievement
-
-**Congratulations! You've completed the Hands-on Labs module!**
-
-**Your Portfolio:**
-- 💬 **AI Chatbot** - Conversational AI application
-- 🎨 **Image Generator** - Creative AI tool
-- 📊 **Text Analyzer** - Data analysis application
-- 🎤 **Voice App** - Voice-enabled interface
-- 🏆 **Capstone Project** - Comprehensive AI solution
-
-**Skills Mastered:**
-- ✅ **Amazon Bedrock** - Foundation models and agents
-- ✅ **Amazon Comprehend** - Text analysis and NLP
-- ✅ **Amazon Rekognition** - Computer vision
-- ✅ **Amazon Transcribe** - Speech-to-text
-- ✅ **Amazon Polly** - Text-to-speech
-- ✅ **Streamlit** - Web application development
-- ✅ **AWS Integration** - Cloud service integration
-
-### 🚀 What's Next?
-
-You're now ready for:
-- 🎯 **Intermediate Learning** - Advanced AI concepts
-- 🏢 **Real Projects** - Work on actual AI projects
-- 💼 **Career Opportunities** - Apply for AI-related jobs
-- 🌟 **Community Contribution** - Share your knowledge
-
-### 🎮 Final Challenge: Share Your Work
-
-1. **📱 Deploy Your Apps** - Make them accessible online
-2. **📝 Write Blog Posts** - Share your learning journey
-3. **🎥 Create Videos** - Show off your projects
-4. **🤝 Help Others** - Mentor new learners
-5. **🏆 Keep Building** - Never stop learning!
+**What you've accomplished:**
+- ✅ Integrated Amazon Comprehend for text analysis
+- ✅ Built interactive data visualizations
+- ✅ Created comprehensive text insights
+- ✅ Implemented real-time analysis
+- ✅ Added beautiful user interface
 
 ---
 
-**You've transformed from a beginner to an AI developer! The future is yours to build! 🚀✨**
+## 🏆 Capstone Project: Multi-Modal AI Assistant
 
-## 📚 Additional Resources
+### 🎯 **Final Challenge: Build a Complete AI Assistant**
 
-### 🎥 **Video Tutorials**
-- [Streamlit Tutorials](https://www.youtube.com/playlist?list=PLtqF5YXg7GLmCvTswG32NqQypOuYkPRUE) - Web app development by Streamlit
-- [AWS AI Services](https://www.youtube.com/playlist?list=PLhr1KZpdzukcOr_6j_zmSrvYnLUtlqL1A) - Advanced features by AWS
-- [Deployment Guide](https://www.youtube.com/watch?v=9T1vfs2i9UI) - Cloud deployment with AWS
+Combine all the skills you've learned to build a comprehensive AI assistant that can:
+- 💬 Have conversations (from Lab 1)
+- 🎨 Generate images (from Lab 2)
+- 📊 Analyze text (from Lab 3)
+- 🔍 Process documents
+- 🎤 Handle voice input/output
 
-### 📖 **Documentation**
-- [AWS AI Services Docs](https://docs.aws.amazon.com/ai/)
-- [Streamlit Documentation](https://docs.streamlit.io/)
-- [Python Best Practices](https://realpython.com/python-pep8/) - Python coding standards
+### 📋 **Project Requirements**
+- **Multi-modal Interface**: Text, voice, and image capabilities
+- **Conversation Memory**: Remember context across interactions
+- **Error Handling**: Robust error handling and user feedback
+- **Responsive Design**: Works on desktop and mobile
+- **Documentation**: Complete setup and usage instructions
 
-### 🎮 **Next Steps**
-- [Intermediate Learning Path](../intermediate/)
-- [Advanced Projects](../advanced/)
-- [Community Forum](https://discord.gg/streamlit) - Streamlit Discord community
+### 🎯 **Success Criteria**
+- [ ] All individual lab features work together
+- [ ] Seamless user experience across modalities
+- [ ] Professional-quality code and documentation
+- [ ] Deployed and accessible online
+- [ ] Demonstrates mastery of AWS AI services
+
+### 🏆 **Capstone Achievement**
+**🚀 Congratulations! You're now an AI Developer!**
+
+**What you've accomplished:**
+- ✅ Built 5 complete AI applications
+- ✅ Mastered AWS AI services
+- ✅ Created professional-quality projects
+- ✅ Developed problem-solving skills
+- ✅ Built a portfolio of AI applications
 
 ---
 
-**Remember: You've built something amazing! Keep creating, keep learning, and keep pushing the boundaries of what's possible with AI! 💪🌟**
+## 🎯 Lab Completion Checklist
+
+### **Lab 1: AI Chatbot**
+- [ ] Chatbot responds to messages
+- [ ] Conversation history maintained
+- [ ] Web interface functional
+- [ ] Error handling implemented
+- [ ] Code documented
+
+### **Lab 2: AI Image Generator**
+- [ ] Images generated from text
+- [ ] Multiple styles supported
+- [ ] Various sizes available
+- [ ] Loading states working
+- [ ] Error handling implemented
+
+### **Lab 3: AI Text Analyzer**
+- [ ] Sentiment analysis working
+- [ ] Language detection accurate
+- [ ] Entities extracted correctly
+- [ ] Visualizations displayed
+- [ ] Statistics calculated
+
+### **Lab 4: Document Processor** (Bonus)
+- [ ] Document upload functional
+- [ ] Text extraction working
+- [ ] AI analysis integrated
+- [ ] Results displayed clearly
+
+### **Lab 5: Voice Assistant** (Bonus)
+- [ ] Speech recognition working
+- [ ] AI processing integrated
+- [ ] Voice response generated
+- [ ] Real-time interaction
+
+### **Capstone Project**
+- [ ] All features integrated
+- [ ] Professional interface
+- [ ] Complete documentation
+- [ ] Deployed online
+- [ ] Portfolio ready
+
+---
+
+**🎉 You've completed the Hands-on Labs! You're now ready to build real AI applications! 🚀**
+
+## 🔗 Next Steps
+
+1. **[Showcase Your Projects](./showcase/)** - Share your creations
+2. **[Join the Community](./community/)** - Connect with other developers
+3. **[Continue Learning](./../intermediate/)** - Advance to intermediate level
+4. **[Build More Projects](./projects/)** - Keep building and learning
+
+---
+
+**Remember: The best way to learn AI is by building AI. Keep creating, keep learning, keep innovating! 💪✨**
