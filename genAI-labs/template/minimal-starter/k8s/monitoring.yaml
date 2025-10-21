@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ServiceMonitor
+metadata:
+  name: genai-minimal-starter-monitor
+  namespace: genai-minimal-starter
+  labels:
+    app.kubernetes.io/name: genai-minimal-starter
+    app.kubernetes.io/component: monitoring
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: genai-minimal-starter
+      app.kubernetes.io/component: backend
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s

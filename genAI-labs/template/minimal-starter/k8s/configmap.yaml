@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genai-minimal-starter-config
+  namespace: genai-minimal-starter
+  labels:
+    app.kubernetes.io/name: genai-minimal-starter
+    app.kubernetes.io/component: config
+data:
+  APP_NAME: "genai-minimal-starter"
+  APP_ENV: "production"
+  PORT: "8000"
