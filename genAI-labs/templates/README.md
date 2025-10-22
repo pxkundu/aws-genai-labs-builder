@@ -38,6 +38,12 @@ Streaming data analysis with GenAI insights
 - **Features**: Real-time processing, anomaly detection, automated alerts
 - **Use Cases**: Monitoring, fraud detection, operational intelligence
 
+### 🛒 [Multi-Agentic E-Commerce](./multi-agent-ecommerce/)
+Intelligent e-commerce platform with coordinated AI agents
+- **Technologies**: Bedrock Agents, Lambda, RDS, ElastiCache, OpenSearch, Terraform
+- **Features**: Multi-agent orchestration, personalized recommendations, dynamic pricing
+- **Use Cases**: E-commerce platforms, retail automation, customer experience
+
 ## 🚀 Quick Start Guide
 
 ### Prerequisites
@@ -47,21 +53,23 @@ AWS CLI v2.x
 Python 3.9+
 Node.js 18+
 Docker
-AWS CDK v2.x
+Terraform >= 1.0
 ```
 
 ### Template Usage
 ```bash
 # 1. Choose and copy template
-cp -r templates/bedrock-chatbot my-chatbot-project
-cd my-chatbot-project
+cp -r templates/multi-agent-ecommerce my-ecommerce-project
+cd my-ecommerce-project
 
 # 2. Configure project
 ./scripts/configure.sh
 
-# 3. Deploy infrastructure
-npm install
-cdk deploy
+# 3. Deploy infrastructure (Terraform)
+cd infrastructure/terraform
+terraform init
+terraform plan -var-file="environments/dev.tfvars"
+terraform apply -var-file="environments/dev.tfvars"
 
 # 4. Deploy application
 ./scripts/deploy-app.sh
@@ -79,9 +87,9 @@ template-name/
 │   ├── data-flow.md
 │   └── security-model.md
 ├── infrastructure/           # Infrastructure as Code
-│   ├── cdk/                 # AWS CDK constructs
+│   ├── terraform/           # Terraform configurations
 │   ├── cloudformation/      # CloudFormation templates
-│   └── terraform/           # Terraform configurations
+│   └── cdk/                 # AWS CDK constructs
 ├── src/                     # Application source code
 │   ├── lambda/              # Lambda functions
 │   ├── api/                 # API implementations
@@ -469,6 +477,7 @@ class TestGenAIWorkflow:
 | **Document Analysis** | Medium | 3-4 hours | Automated document processing |
 | **Multi-Agent Workflow** | High | 8-12 hours | Complex automation tasks |
 | **Real-Time Analytics** | High | 6-8 hours | Streaming data analysis |
+| **Multi-Agentic E-Commerce** | High | 12-16 hours | E-commerce platforms, retail automation |
 
 ---
 
