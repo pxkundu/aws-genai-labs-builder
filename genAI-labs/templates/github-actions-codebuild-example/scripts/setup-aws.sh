@@ -173,7 +173,7 @@ deploy_infrastructure() {
             ;;
         *)
             print_error "Invalid deployment method: $deployment_method"
-            print_error "Supported methods: cdk, terraform, cloudformation"
+            print_error "Supported methods: terraform, cloudformation"
             exit 1
             ;;
     esac
@@ -283,7 +283,7 @@ display_summary() {
 main() {
     local environment="${1:-development}"
     local region="${2:-us-east-1}"
-    local deployment_method="${3:-cdk}"
+    local deployment_method="${3:-terraform}"
     
     print_status "Starting GitHub Actions + AWS CodeBuild setup"
     print_status "Environment: $environment"
@@ -319,10 +319,10 @@ if [ $# -eq 0 ]; then
     echo "Arguments:"
     echo "  environment        Environment name (default: development)"
     echo "  region            AWS region (default: us-east-1)"
-    echo "  deployment-method Deployment method: cdk, terraform, cloudformation (default: cdk)"
+    echo "  deployment-method Deployment method: terraform, cloudformation (default: terraform)"
     echo
     echo "Examples:"
-    echo "  $0 development us-east-1 cdk"
+    echo "  $0 development us-east-1 terraform"
     echo "  $0 production us-west-2 terraform"
     echo "  $0 staging eu-west-1 cloudformation"
     exit 1

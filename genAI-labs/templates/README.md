@@ -147,34 +147,37 @@ Each template includes environment-specific configuration files:
 ```
 
 ### 2. **Infrastructure Customization**
-Modify CDK constructs for your specific requirements:
+Modify Terraform modules for your specific requirements:
 
-```typescript
-// infrastructure/cdk/lib/genai-stack.ts
-export class GenAIStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
+```hcl
+# infrastructure/terraform/main.tf
+module "vpc" {
+  source = "./modules/vpc"
+  
+  name_prefix = "${var.project_name}-${var.environment}"
+  vpc_cidr    = var.vpc_cidr
+  azs         = var.availability_zones
+  
+  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnets
+  
+  enable_nat_gateway = var.enable_nat_gateway
+  enable_dns_hostnames = true
+  enable_dns_support = true
+  
+  tags = local.common_tags
+}
 
-    // Customize VPC configuration
-    const vpc = new Vpc(this, 'GenAIVPC', {
-      maxAzs: 2,
-      natGateways: 1,
-      enableDnsHostnames: true,
-      enableDnsSupport: true
-    });
-
-    // Customize Lambda configuration
-    const processor = new Function(this, 'GenAIProcessor', {
-      runtime: Runtime.PYTHON_3_9,
-      memorySize: 1024,
-      timeout: Duration.minutes(5),
-      vpc: vpc,
-      environment: {
-        BEDROCK_REGION: this.region,
-        LOG_LEVEL: 'INFO'
-      }
-    });
-  }
+module "lambda" {
+  source = "./modules/lambda"
+  
+  name_prefix = local.name_prefix
+  vpc_id = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnet_ids
+  
+  kms_key_id = module.kms.key_id
+  
+  tags = local.common_tags
 }
 ```
 

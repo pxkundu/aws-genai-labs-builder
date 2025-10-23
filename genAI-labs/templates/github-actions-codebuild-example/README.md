@@ -7,7 +7,7 @@ This project demonstrates how to integrate GitHub Actions with AWS CodeBuild to 
 The project includes:
 - **GitHub Actions Workflows** for CI/CD
 - **AWS CodeBuild Projects** with VPC integration
-- **Infrastructure as Code** using AWS CDK, CloudFormation, and Terraform
+- **Infrastructure as Code** using Terraform and CloudFormation
 - **Sample Application** with comprehensive testing
 - **Monitoring and Security** configurations
 
@@ -35,10 +35,10 @@ The project includes:
 
 3. **Deploy Infrastructure**
    ```bash
-   cd infrastructure/cdk
-   npm install
-   npx cdk bootstrap
-   npx cdk deploy --all
+   cd infrastructure/terraform
+   terraform init
+   terraform plan -var-file="environments/dev.tfvars"
+   terraform apply -var-file="environments/dev.tfvars"
    ```
 
 4. **Configure GitHub Secrets**
@@ -59,9 +59,8 @@ The project includes:
 github-actions-codebuild-example/
 ├── .github/workflows/          # GitHub Actions workflows
 ├── infrastructure/             # Infrastructure as Code
-│   ├── cdk/                   # AWS CDK implementation
-│   ├── cloudformation/        # CloudFormation templates
-│   └── terraform/             # Terraform configuration
+│   ├── terraform/             # Terraform configuration
+│   └── cloudformation/        # CloudFormation templates
 ├── src/                       # Application source code
 │   ├── app/                   # Main application
 │   ├── tests/                 # Test suites

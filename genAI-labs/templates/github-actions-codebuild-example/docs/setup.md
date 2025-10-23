@@ -7,7 +7,7 @@ This guide will walk you through setting up GitHub Actions with AWS CodeBuild in
 ### Required Tools
 
 - **AWS CLI v2.x** - [Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- **Node.js 18+** - [Download](https://nodejs.org/)
+- **Terraform >= 1.0** - [Download](https://terraform.io/downloads)
 - **Python 3.11+** - [Download](https://python.org/)
 - **Docker** - [Installation Guide](https://docs.docker.com/get-docker/)
 - **Git** - [Download](https://git-scm.com/)
@@ -102,22 +102,13 @@ Edit `config/development.json`:
 
 Choose your preferred deployment method:
 
-#### Using AWS CDK
-
-```bash
-cd infrastructure/cdk
-npm install
-npx cdk bootstrap
-npx cdk deploy --all
-```
-
-#### Using Terraform
+#### Using Terraform (Recommended)
 
 ```bash
 cd infrastructure/terraform
 terraform init
-terraform plan
-terraform apply
+terraform plan -var-file="environments/dev.tfvars"
+terraform apply -var-file="environments/dev.tfvars"
 ```
 
 #### Using CloudFormation
