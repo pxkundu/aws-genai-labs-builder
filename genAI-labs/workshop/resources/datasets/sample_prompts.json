@@ -1,0 +1,59 @@
+{
+  "code_generation": [
+    {
+      "prompt": "Generate a Python function that calculates the factorial of a number",
+      "language": "python",
+      "category": "mathematics"
+    },
+    {
+      "prompt": "Create a FastAPI endpoint that accepts POST requests with user data",
+      "language": "python",
+      "category": "api"
+    },
+    {
+      "prompt": "Generate a Python class for managing a task list with add, remove, and list methods",
+      "language": "python",
+      "category": "data-structures"
+    },
+    {
+      "prompt": "Create a Python function that validates an email address using regex",
+      "language": "python",
+      "category": "validation"
+    },
+    {
+      "prompt": "Generate a Python function that reads a CSV file and returns a pandas DataFrame",
+      "language": "python",
+      "category": "data-processing"
+    }
+  ],
+  "infrastructure": [
+    {
+      "prompt": "Create an AWS CDK stack with Lambda function and API Gateway",
+      "language": "python",
+      "category": "infrastructure"
+    },
+    {
+      "prompt": "Generate Terraform configuration for DynamoDB table with GSI",
+      "language": "hcl",
+      "category": "infrastructure"
+    },
+    {
+      "prompt": "Create AWS CDK stack with S3 bucket, Lambda function, and EventBridge rule",
+      "language": "python",
+      "category": "infrastructure"
+    }
+  ],
+  "refactoring": [
+    {
+      "original_code": "def add(a,b): return a+b",
+      "instructions": "Add type hints and improve code style",
+      "language": "python"
+    },
+    {
+      "original_code": "def process(data):\n    result=[]\n    for i in range(len(data)):\n        if data[i]>0:\n            result.append(data[i]*2)\n    return result",
+      "instructions": "Use list comprehension and add type hints",
+      "language": "python"
+    }
+  ]
+}
+

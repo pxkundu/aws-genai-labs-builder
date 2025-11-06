@@ -205,3 +205,38 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+terraform.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# AWS CDK
+cdk.out/
+cdk.context.json
+!cdk.context.json.example
+
+# Workshop specific
+genAI-labs/workshop/.env
+genAI-labs/workshop/venv/
+genAI-labs/workshop/*.zip
+genAI-labs/workshop/lambda_function.zip
+genAI-labs/workshop/logs/
+genAI-labs/workshop/.pytest_cache/
+genAI-labs/workshop/htmlcov/
+genAI-labs/workshop/.coverage
+genAI-labs/workshop/code/examples/generated_*.py
+genAI-labs/workshop/code/examples/*_generated.py
+genAI-labs/workshop/infrastructure/terraform/.terraform/
+genAI-labs/workshop/infrastructure/terraform/terraform.tfstate*
+genAI-labs/workshop/infrastructure/terraform/.terraform.lock.hcl
+genAI-labs/workshop/infrastructure/cdk/cdk.out/
+genAI-labs/workshop/infrastructure/cdk/cdk.context.json

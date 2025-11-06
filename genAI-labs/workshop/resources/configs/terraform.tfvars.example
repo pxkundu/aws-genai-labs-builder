@@ -1,0 +1,11 @@
+# Terraform Variables Configuration Example
+# Copy this file to terraform.tfvars and customize
+
+aws_region = "us-east-1"
+environment = "workshop"
+
+# Optional: Override default values
+# lambda_memory = 512
+# lambda_timeout = 300
+# api_stage_name = "prod"
+
