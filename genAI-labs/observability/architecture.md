@@ -18,7 +18,7 @@ graph LR
     subgraph Telemetry Pipeline
         F[AWS Distro for OpenTelemetry Collector]
         G[Prometheus Remote Write]
-        H[Firehose -> S3 -> OpenSearch]
+        H[Firehose to S3 to OpenSearch]
     end
 
     subgraph AWS Native Sinks
