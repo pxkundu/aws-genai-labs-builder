@@ -1,0 +1,45 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["GenAI/Observability", "genai_prompt_latency_ms", "Service", "genai-observability-service", {"stat": "p95"}],
+          ["GenAI/Observability", "genai_prompt_latency_ms", "Service", "genai-observability-service", {"stat": "Average"}]
+        ],
+        "title": "Prompt Latency",
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${AWS::Region}",
+        "period": 60
+      }
+    },
+    {
+      "type": "metric",
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["GenAI/Observability", "genai_prompt_cost_usd", "Service", "genai-observability-service"]
+        ],
+        "title": "Cost per Prompt",
+        "stat": "Sum",
+        "view": "timeSeries",
+        "region": "${AWS::Region}",
+        "period": 300
+      }
+    },
+    {
+      "type": "log",
+      "width": 24,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/observability/${environment}' | fields @timestamp, @message, level, trace_id | sort @timestamp desc | limit 20",
+        "region": "${AWS::Region}",
+        "title": "Recent JSON Logs"
+      }
+    }
+  ]
+}

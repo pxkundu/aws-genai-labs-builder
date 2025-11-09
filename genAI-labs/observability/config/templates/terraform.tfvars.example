@@ -1,0 +1,10 @@
+aws_region              = "us-east-1"
+environment              = "dev"
+log_retention_days       = 30
+prompt_latency_threshold_ms = 1500
+custom_metric_namespace  = "GenAI/Observability"
+enable_ai_ops            = true
+ai_ops_lambda_role_arn   = "arn:aws:iam::123456789012:role/GenAIObservabilityAIOps"
+ai_ops_lambda_package    = "../scripts/monitoring/ai_ops_lambda.zip"
+security_lambda_arn      = "arn:aws:lambda:us-east-1:123456789012:function:SecurityLogProcessor"
+bedrock_model_id         = "anthropic.claude-3-sonnet-20240229-v1:0"
