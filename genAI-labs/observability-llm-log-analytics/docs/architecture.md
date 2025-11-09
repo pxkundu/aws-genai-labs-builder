@@ -5,27 +5,27 @@
 ```mermaid
 graph TD
     subgraph Ingestion Layer
-        OTel[ADOT Collector]
-        Firehose[Kinesis Firehose]
+        OTel["ADOT Collector"]
+        Firehose["Kinesis Firehose"]
     end
 
     subgraph Storage & Search
-        CWL[CloudWatch Logs]
-        OS[Amazon OpenSearch Service]
-        S3[Amazon S3 Archive]
+        CWL["CloudWatch Logs"]
+        OS["Amazon OpenSearch Service"]
+        S3["Amazon S3 Archive"]
     end
 
     subgraph Analytics Layer
-        LambdaSumm[Lambda LLM Summarizer]
-        Bedrock[Amazon Bedrock (Claude)]
-        Glue[Glue ETL Jobs]
+        LambdaSumm["Lambda LLM Summarizer"]
+        Bedrock["Amazon Bedrock (Claude)"]
+        Glue["Glue ETL Jobs"]
     end
 
     subgraph UI & Operations
-        BackendAPI[FastAPI Insights API]
-        FrontendUI[React/Next.js Dashboard]
-        Slack[ChatOps]
-        Ticketing[ServiceNow/Jira]
+        BackendAPI["FastAPI Insights API"]
+        FrontendUI["React/Next.js Dashboard"]
+        Slack["ChatOps"]
+        Ticketing["ServiceNow/Jira"]
     end
 
     OTel --> Firehose

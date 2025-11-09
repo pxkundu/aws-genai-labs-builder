@@ -5,38 +5,38 @@
 ```mermaid
 graph LR
     subgraph Application Layer
-        A[FastAPI GenAI Service]
-        B[Claude Prompt Orchestrator]
+        A["FastAPI GenAI Service"]
+        B["Claude Prompt Orchestrator"]
     end
 
     subgraph Observability SDK
-        C[OpenTelemetry SDK]
-        D[Structured Logging (JSON)]
-        E[Metrics Middleware]
+        C["OpenTelemetry SDK"]
+        D["Structured Logging (JSON)"]
+        E["Metrics Middleware"]
     end
 
     subgraph Telemetry Pipeline
-        F[AWS Distro for OpenTelemetry Collector]
-        G[Prometheus Remote Write]
-        H[Firehose to S3 to OpenSearch]
+        F["AWS Distro for OpenTelemetry Collector"]
+        G["Prometheus Remote Write"]
+        H["Firehose to S3 to OpenSearch"]
     end
 
     subgraph AWS Native Sinks
-        I[CloudWatch Logs]
-        J[CloudWatch Metrics]
-        K[AWS X-Ray]
+        I["CloudWatch Logs"]
+        J["CloudWatch Metrics"]
+        K["AWS X-Ray"]
     end
 
     subgraph Analytics & Insights
-        L[Amazon Managed Grafana]
-        M[Amazon QuickSight]
-        N[Amazon Bedrock + Claude]
+        L["Amazon Managed Grafana"]
+        M["Amazon QuickSight"]
+        N["Amazon Bedrock + Claude"]
     end
 
     subgraph Incident Response
-        O[Amazon EventBridge]
-        P[AWS Lambda]
-        Q[SNS / Slack / PagerDuty]
+        O["Amazon EventBridge"]
+        P["AWS Lambda"]
+        Q["SNS / Slack / PagerDuty"]
     end
 
     A --> C
