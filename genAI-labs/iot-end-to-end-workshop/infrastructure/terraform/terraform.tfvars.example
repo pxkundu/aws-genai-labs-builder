@@ -1,0 +1,14 @@
+project_name = "iot-e2e-ws"
+aws_region   = "us-east-1"
+
+enable_opensearch        = false
+iot_telemetry_topic      = "devices/+/telemetry"
+thing_type_name          = "workshopThingType"
+create_fleet_provisioning = true
+
+tags = {
+  Project = "IoT E2E Workshop"
+  Owner   = "YourName"
+}
+
+
