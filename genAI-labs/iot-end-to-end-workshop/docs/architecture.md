@@ -6,7 +6,7 @@ This workshop provisions a realistic, production-lean IoT platform on AWS using 
 
 ```mermaid
 flowchart LR
-    Device[IoT Device<br/>MQTT/TLS] -->|MQTT Publish/Subscribe| IoTCore[AWS IoT Core]
+    Device[IoT Device MQTT/TLS] -->|Publish/Subscribe| IoTCore[AWS IoT Core]
     IoTCore -->|Rule: raw/telemetry| Kinesis[Kinesis Data Streams]
     IoTCore -->|Rule: archive/telemetry| Firehose[Kinesis Firehose]
     Firehose --> S3[S3 Data Lake]
@@ -17,14 +17,12 @@ flowchart LR
     IoTA --> Dataset[IoT Analytics Dataset]
     IoTCore --> EventsIn[IoT Events Input]
     EventsIn --> Detector[IoT Events Detector Model]
-    Detector -->|State Change| SNS[Amazon SNS (optional)]
+    Detector -->|State Change| SNS[Amazon SNS optional]
     IoTCore -.->|Defender Metrics| Defender[IoT Device Defender]
     CloudWatch[CloudWatch] --- IoTCore
     CloudWatch --- LambdaProc
     CloudWatch --- Firehose
-    OS[(OpenSearch):::opt] -. optional .- IoTCore
-
-    classDef opt fill:#eef,stroke:#99f
+    OS[OpenSearch optional] -. optional .- IoTCore
 ```
 
 ### Key components
