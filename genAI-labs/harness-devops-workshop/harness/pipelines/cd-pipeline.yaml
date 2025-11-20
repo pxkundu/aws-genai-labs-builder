@@ -1,0 +1,119 @@
+pipeline:
+  name: workshop-cd-pipeline
+  identifier: workshop_cd_pipeline
+  projectIdentifier: devops-workshop
+  orgIdentifier: harness-workshop
+  description: "CD pipeline for deploying application to AWS ECS"
+  tags: {}
+  stages:
+    - stage:
+        name: deploy-to-development
+        identifier: deploy_to_development
+        type: Deployment
+        description: "Deploy application to development environment"
+        spec:
+          deploymentType: ECS
+          service:
+            serviceRef: workshop-backend-service
+            serviceInputs:
+              serviceDefinition:
+                spec:
+                  artifacts:
+                    primary:
+                      primaryArtifactRef: <+artifacts.primary>
+                      sources:
+                        - spec:
+                            imagePath: <+pipeline.variables.registry>/backend
+                            tag: <+pipeline.variables.imageTag>
+                          identifier: backend-image
+                          type: Ecr
+          environment:
+            environmentRef: development
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: <+input>
+          execution:
+            steps:
+              - step:
+                  type: EcsRollingDeploy
+                  name: deploy-backend
+                  identifier: deploy_backend
+                  spec:
+                    skipSteadyStateCheck: false
+              - step:
+                  type: EcsRollingDeploy
+                  name: deploy-frontend
+                  identifier: deploy_frontend
+                  spec:
+                    skipSteadyStateCheck: false
+            rollbackSteps:
+              - step:
+                  type: EcsRollingRollback
+                  name: rollback-backend
+                  identifier: rollback_backend
+              - step:
+                  type: EcsRollingRollback
+                  name: rollback-frontend
+                  identifier: rollback_frontend
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
+    - stage:
+        name: deploy-to-production
+        identifier: deploy_to_production
+        type: Deployment
+        description: "Deploy application to production environment"
+        spec:
+          deploymentType: ECS
+          service:
+            serviceRef: workshop-backend-service
+          environment:
+            environmentRef: production
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: <+input>
+          execution:
+            steps:
+              - step:
+                  type: EcsCanaryDeploy
+                  name: canary-deploy
+                  identifier: canary_deploy
+                  spec:
+                    skipSteadyStateCheck: false
+              - step:
+                  type: EcsCanaryDelete
+                  name: canary-delete
+                  identifier: canary_delete
+                  spec:
+                    skipSteadyStateCheck: false
+            rollbackSteps:
+              - step:
+                  type: EcsCanaryDelete
+                  name: rollback-canary
+                  identifier: rollback_canary
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
+        when:
+          stageStatus: Success
+          condition: <+pipeline.stages.deploy_to_development.status> == "Success"
+  variables:
+    - name: registry
+      type: String
+      description: "ECR registry URL"
+      value: <+input>
+    - name: imageTag
+      type: String
+      description: "Docker image tag"
+      value: <+input>
+    - name: awsRegion
+      type: String
+      description: "AWS region"
+      value: us-east-1
+

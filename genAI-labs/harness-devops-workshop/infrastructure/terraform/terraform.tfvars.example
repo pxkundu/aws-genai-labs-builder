@@ -1,0 +1,24 @@
+# Terraform Variables Configuration
+# Copy this file to terraform.tfvars and update with your values
+
+project_name = "harness-workshop"
+environment  = "dev"
+aws_region   = "us-east-1"
+vpc_cidr     = "10.0.0.0/16"
+
+tags = {
+  Owner       = "DevOps Team"
+  CostCenter  = "Engineering"
+  Project     = "Harness Workshop"
+}
+
+# S3 Backend Configuration (uncomment and configure)
+# terraform {
+#   backend "s3" {
+#     bucket = "your-terraform-state-bucket"
+#     key    = "harness-workshop/terraform.tfstate"
+#     region = "us-east-1"
+#     encrypt = true
+#   }
+# }
+

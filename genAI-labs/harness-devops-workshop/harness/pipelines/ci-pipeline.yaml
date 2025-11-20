@@ -1,0 +1,185 @@
+pipeline:
+  name: workshop-ci-pipeline
+  identifier: workshop_ci_pipeline
+  projectIdentifier: devops-workshop
+  orgIdentifier: harness-workshop
+  description: "CI pipeline for building, testing, and scanning application"
+  tags: {}
+  stages:
+    - stage:
+        name: build-and-test
+        identifier: build_and_test
+        type: CI
+        description: "Build Docker images, run tests, and security scans"
+        spec:
+          cloneCodebase: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: <+input>
+              namespace: <+input>
+              automountServiceAccountToken: true
+              nodeSelector: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: checkout-code
+                  identifier: checkout_code
+                  description: "Checkout source code from repository"
+                  spec:
+                    connectorRef: github-workshop-connector
+                    repo: <+input>
+                    branch: <+input>
+                    shell: Sh
+                    command: |
+                      echo "Checking out code..."
+                      echo "Branch: <+trigger.branch>"
+                      echo "Commit: <+trigger.commitSha>"
+              - step:
+                  type: Run
+                  name: install-dependencies
+                  identifier: install_dependencies
+                  description: "Install build dependencies"
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "Installing dependencies..."
+                      # Install Docker if not available
+                      # Install other build tools as needed
+              - step:
+                  type: BuildAndPushECR
+                  name: build-backend-image
+                  identifier: build_backend_image
+                  description: "Build and push backend Docker image to ECR"
+                  spec:
+                    connectorRef: aws-workshop-connector
+                    region: <+pipeline.variables.awsRegion>
+                    image: <+pipeline.variables.registry>/backend:<+pipeline.variables.imageTag>
+                    dockerfile: backend/Dockerfile
+                    context: backend/
+                    tags:
+                      - <+pipeline.variables.imageTag>
+                      - latest
+                    cacheFrom:
+                      - <+pipeline.variables.registry>/backend:latest
+                    cacheTo:
+                      - <+pipeline.variables.registry>/backend:latest
+              - step:
+                  type: Run
+                  name: run-backend-tests
+                  identifier: run_backend_tests
+                  description: "Run backend unit and integration tests"
+                  spec:
+                    shell: Sh
+                    command: |
+                      cd backend
+                      pip install -r requirements.txt
+                      pytest tests/ -v --cov=app --cov-report=xml --cov-report=html
+                    image: python:3.11-slim
+                    reports:
+                      type: TestReports
+                      spec:
+                        paths:
+                          - backend/coverage.xml
+              - step:
+                  type: BuildAndPushECR
+                  name: build-frontend-image
+                  identifier: build_frontend_image
+                  description: "Build and push frontend Docker image to ECR"
+                  spec:
+                    connectorRef: aws-workshop-connector
+                    region: <+pipeline.variables.awsRegion>
+                    image: <+pipeline.variables.registry>/frontend:<+pipeline.variables.imageTag>
+                    dockerfile: frontend/Dockerfile
+                    context: frontend/
+                    tags:
+                      - <+pipeline.variables.imageTag>
+                      - latest
+                    cacheFrom:
+                      - <+pipeline.variables.registry>/frontend:latest
+                    cacheTo:
+                      - <+pipeline.variables.registry>/frontend:latest
+              - step:
+                  type: Run
+                  name: run-frontend-tests
+                  identifier: run_frontend_tests
+                  description: "Run frontend unit tests"
+                  spec:
+                    shell: Sh
+                    command: |
+                      cd frontend
+                      npm ci
+                      npm test -- --watchAll=false --coverage
+                    image: node:18-alpine
+              - step:
+                  type: Security
+                  name: scan-backend-image
+                  identifier: scan_backend_image
+                  description: "Security scan for backend container image"
+                  spec:
+                    mode: orchestration
+                    config: default
+                    target:
+                      name: backend-image
+                      type: container
+                      variant: <+pipeline.variables.registry>/backend:<+pipeline.variables.imageTag>
+                    advanced:
+                      log:
+                        level: info
+                        serializer: plain
+              - step:
+                  type: Security
+                  name: scan-frontend-image
+                  identifier: scan_frontend_image
+                  description: "Security scan for frontend container image"
+                  spec:
+                    mode: orchestration
+                    config: default
+                    target:
+                      name: frontend-image
+                      type: container
+                      variant: <+pipeline.variables.registry>/frontend:<+pipeline.variables.imageTag>
+                    advanced:
+                      log:
+                        level: info
+                        serializer: plain
+              - step:
+                  type: Run
+                  name: publish-artifacts
+                  identifier: publish_artifacts
+                  description: "Publish build artifacts and metadata"
+                  spec:
+                    shell: Sh
+                    command: |
+                      echo "Publishing artifacts..."
+                      echo "Backend Image: <+pipeline.variables.registry>/backend:<+pipeline.variables.imageTag>"
+                      echo "Frontend Image: <+pipeline.variables.registry>/frontend:<+pipeline.variables.imageTag>"
+                      # Publish to artifact repository if needed
+          variables: []
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: Ignore
+  properties:
+    ci:
+      codebase:
+        connectorRef: github-workshop-connector
+        repoName: <+input>
+        build: <+input>
+  variables:
+    - name: registry
+      type: String
+      description: "ECR registry URL"
+      value: <+input>
+    - name: imageTag
+      type: String
+      description: "Docker image tag"
+      value: <+trigger.tag> || <+pipeline.sequenceId>
+    - name: awsRegion
+      type: String
+      description: "AWS region"
+      value: us-east-1
+
