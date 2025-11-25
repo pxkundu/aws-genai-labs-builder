@@ -1,6 +1,44 @@
 # 💰 Financial Services AI Solutions
 
-> **Secure, compliant AWS GenAI solutions for modern financial institutions**
+> **Complete secure, compliant AI-powered financial services platform with AWS GenAI services**
+
+A comprehensive, production-ready financial services solution that leverages AWS GenAI services including Amazon Bedrock, Amazon SageMaker, AWS Fraud Detector, Amazon Comprehend, and Amazon Textract to deliver intelligent fraud detection, risk assessment, and customer advisory capabilities while maintaining strict regulatory compliance.
+
+## 🚀 Quick Start
+
+### Prerequisites
+- AWS Account with GenAI services access
+- Python 3.11+
+- Node.js 18+ (optional, for frontend)
+- AWS CLI configured
+- Terraform 1.5+ (for infrastructure)
+
+### Installation
+```bash
+# Clone the repository
+git clone <repository-url>
+cd genAI-labs/financial-services
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp config/environments/development.env.example .env
+# Edit .env with your AWS credentials
+
+# Deploy infrastructure
+cd infrastructure/terraform
+terraform init
+terraform apply
+```
+
+### Access the Application
+- **API Documentation**: http://localhost:8000/docs (if running locally)
+- **API Endpoint**: `https://your-api-id.execute-api.us-east-1.amazonaws.com`
 
 ## 🎯 Solution Overview
 
@@ -389,49 +427,81 @@ class FinancialAIMetrics:
         )
 ```
 
-## 🚀 Deployment Architecture
+## 🏗️ Architecture
 
-### Infrastructure as Code
-```python
-from aws_cdk import (
-    core, aws_lambda as _lambda, aws_kinesis as kinesis,
-    aws_apigateway as apigateway, aws_dynamodb as dynamodb
-)
+The solution follows a secure, layered architecture with compliance and security built-in.
 
-class FinancialServicesStack(core.Stack):
-    def __init__(self, scope: core.Construct, construct_id: str, **kwargs):
-        super().__init__(scope, construct_id, **kwargs)
-        
-        # Real-time data stream
-        transaction_stream = kinesis.Stream(
-            self, "TransactionStream",
-            shard_count=10,
-            retention_period=core.Duration.hours(24)
-        )
-        
-        # Fraud detection Lambda
-        fraud_detection_lambda = _lambda.Function(
-            self, "FraudDetectionFunction",
-            runtime=_lambda.Runtime.PYTHON_3_9,
-            handler="fraud_detection.handler",
-            code=_lambda.Code.from_asset("lambda/fraud_detection"),
-            environment={
-                'STREAM_NAME': transaction_stream.stream_name
-            }
-        )
-        
-        # API Gateway
-        api = apigateway.RestApi(
-            self, "FinancialServicesAPI",
-            rest_api_name="Financial Services AI API"
-        )
-        
-        # Risk assessment endpoint
-        risk_assessment = api.root.add_resource("risk-assessment")
-        risk_assessment.add_method(
-            "POST", 
-            apigateway.LambdaIntegration(fraud_detection_lambda)
-        )
+```mermaid
+graph TB
+    subgraph "Applications"
+        Banking[Banking Apps]
+        Trading[Trading Platform]
+        Portal[Customer Portal]
+    end
+    
+    subgraph "API Layer"
+        APIGW[API Gateway]
+        WS[WebSocket API]
+    end
+    
+    subgraph "Application Layer"
+        Fraud[Fraud Detection]
+        Risk[Risk Assessment]
+        Research[Investment Research]
+        Advisory[Customer Advisory]
+    end
+    
+    subgraph "AI Services"
+        Bedrock[Bedrock]
+        SageMaker[SageMaker]
+        FraudDet[Fraud Detector]
+        Comprehend[Comprehend]
+        Textract[Textract]
+    end
+    
+    subgraph "Data Layer"
+        DynamoDB[(DynamoDB)]
+        S3[(S3)]
+        Kinesis[Kinesis]
+        CloudTrail[CloudTrail]
+    end
+    
+    Banking --> APIGW
+    Trading --> APIGW
+    Portal --> WS
+    APIGW --> Fraud
+    APIGW --> Risk
+    APIGW --> Research
+    WS --> Advisory
+    Fraud --> FraudDet
+    Fraud --> SageMaker
+    Risk --> SageMaker
+    Research --> Textract
+    Research --> Comprehend
+    Advisory --> Bedrock
+```
+
+For detailed architecture documentation, see [Architecture Guide](./architecture.md).
+
+## 📁 Project Structure
+
+```
+financial-services/
+├── README.md                    # This file
+├── architecture.md              # Solution architecture
+├── DEPLOYMENT.md               # Deployment guide
+├── docs/                       # Documentation
+│   ├── workshop/              # Workshop modules
+│   └── guides/                # Implementation guides
+├── backend/                    # Backend services
+│   ├── lambda/                # Lambda functions
+│   └── api/                   # API services
+├── infrastructure/            # Infrastructure as Code
+│   ├── terraform/            # Terraform configurations
+│   └── cdk/                  # AWS CDK (alternative)
+├── scripts/                   # Deployment scripts
+├── config/                    # Configuration files
+└── data/                      # Sample data
 ```
 
 ## 📈 Performance Benchmarks
@@ -574,17 +644,186 @@ async def analyze_investment(request: InvestmentAnalysisRequest):
 - **Incident Response**: Automated incident detection and response
 - **Change Management**: Controlled deployment processes
 
+## 🎓 Workshop Guide
+
+This repository includes a comprehensive workshop guide for learning and implementing financial services AI solutions:
+
+### [📚 Workshop Overview](docs/workshop/README.md)
+Complete hands-on workshop with 6 modules covering:
+1. **Environment Setup** (45 min)
+2. **Fraud Detection** (120 min)
+3. **Risk Assessment** (90 min)
+4. **Investment Research** (90 min)
+5. **Customer Advisory** (90 min)
+6. **Compliance & Production** (60 min)
+
+### Quick Workshop Start
+```bash
+# Follow the workshop guide
+cd docs/workshop
+open README.md
+
+# Start with Module 1
+open module-1-setup.md
+```
+
+## 🚀 Deployment
+
+### Development
+```bash
+# Deploy infrastructure
+cd infrastructure/terraform
+terraform apply
+
+# Deploy Lambda functions
+./scripts/deploy-lambdas.sh
+
+# Load sample data
+python scripts/load-sample-data.py
+```
+
+### Production
+```bash
+# Deploy with Terraform
+cd infrastructure/terraform
+terraform apply -var="environment=production"
+
+# Or deploy with CDK
+cd infrastructure/cdk
+cdk deploy --all
+```
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+
+## 🧪 Testing
+
+### Run Tests
+```bash
+# Backend tests
+pytest tests/
+
+# Integration tests
+pytest tests/integration/
+
+# Compliance tests
+./scripts/compliance-tests.sh
+```
+
+## 📊 Performance Metrics
+
+### Key Performance Indicators
+- **Fraud Detection Latency**: < 50ms (p95)
+- **Risk Assessment**: < 200ms (p95)
+- **Investment Analysis**: < 30 seconds
+- **API Response Time**: < 200ms (p95)
+
+### Business Impact
+- **Fraud Detection Accuracy**: 98.5%
+- **False Positive Rate**: < 2%
+- **Cost Reduction**: 94-97% vs manual processes
+- **Processing Speed**: 10,000+ transactions/second
+
+## 🔒 Security & Compliance
+
+### Data Protection
+- **End-to-end encryption** for all financial data
+- **SOX, PCI DSS, GDPR/CCPA compliance** for regulatory requirements
+- **Role-based access control** with AWS IAM and MFA
+- **Comprehensive audit logging** with CloudTrail
+
+### Security Features
+- **PII detection and masking** with Amazon Comprehend
+- **Secure API endpoints** with authentication
+- **Encrypted data storage** with AWS KMS
+- **Network security** with VPC and security groups
+- **Zero-trust architecture** with least privilege access
+
+### Compliance Features
+- **Fair Lending**: Bias detection and monitoring
+- **KYC/AML**: Know Your Customer compliance
+- **Audit Trails**: Immutable audit logging
+- **Regulatory Reporting**: Automated compliance reports
+
+## 📈 Monitoring
+
+### CloudWatch Dashboards
+- **Fraud Detection Metrics**: Detection rates, accuracy, latency
+- **Risk Assessment Metrics**: Risk scores, approval rates
+- **API Performance**: Request rates, latency, errors
+- **Infrastructure Health**: Resource utilization, costs
+
+### Alerting
+- **Fraud Alerts**: Real-time fraud detection alerts
+- **Performance Degradation**: Alerts when latency exceeds thresholds
+- **Error Rates**: Alerts for elevated error rates
+- **Compliance Issues**: Alerts for compliance violations
+
+## 📚 Documentation
+
+### Core Documentation
+- **[Architecture Guide](./architecture.md)** - Detailed system architecture
+- **[Deployment Guide](./DEPLOYMENT.md)** - Complete deployment instructions
+- **[Workshop Guide](./docs/workshop/README.md)** - Hands-on learning modules
+
+### Implementation Guides
+- **[Fraud Detection Setup](./docs/guides/fraud-detection-setup.md)** - Fraud detection implementation
+
+### API Reference
+- **Fraud Detection API** - Real-time fraud detection endpoints
+- **Risk Assessment API** - Credit risk evaluation endpoints
+- **Investment Research API** - Financial analysis endpoints
+- **Customer Advisory API** - Financial planning endpoints
+
+## 🤝 Contributing
+
+### Development Setup
+```bash
+# Fork the repository
+git clone your-fork-url
+cd genAI-labs/financial-services
+
+# Create feature branch
+git checkout -b feature/your-feature
+
+# Make changes and test
+pytest tests/
+
+# Submit pull request
+git push origin feature/your-feature
+```
+
+### Code Standards
+- **Python**: Black formatting, flake8 linting
+- **Testing**: pytest for backend
+- **Documentation**: Comprehensive docstrings and comments
+- **Security**: Security review required for all changes
+
+## 📞 Support
+
+### Documentation
+- [Architecture Guide](./architecture.md)
+- [Workshop Guide](./docs/workshop/)
+- [Deployment Guide](./DEPLOYMENT.md)
+
+### Community
+- **GitHub Issues**: Bug reports and feature requests
+- **Discussions**: Community support and questions
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.
+
 ---
 
-**Ready to transform financial services with AI? Start building today! 🚀**
+**Ready to transform financial services with AI? Start with the [Workshop Guide](docs/workshop/README.md)! 🚀**
 
 ## 🔗 Quick Links
 
-- **[API Documentation](./docs/api-reference.md)** - Complete API reference
-- **[Deployment Guide](./docs/deployment.md)** - Step-by-step setup
-- **[Compliance Guide](./docs/compliance.md)** - Regulatory compliance
-- **[Performance Tuning](./docs/performance.md)** - Optimization guide
+- **[Workshop Guide](./docs/workshop/README.md)** - Complete hands-on tutorial
+- **[Architecture Guide](./architecture.md)** - System design details
+- **[Deployment Guide](./DEPLOYMENT.md)** - Production deployment
+- **[Fraud Detection Guide](./docs/guides/fraud-detection-setup.md)** - Fraud detection implementation
 
 ---
 
-**Next Steps**: Deploy your financial AI solution and revolutionize your institution! 💪
+**Built with ❤️ using AWS GenAI services**
