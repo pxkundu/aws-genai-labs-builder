@@ -1,6 +1,44 @@
 # 🎬 Media & Entertainment AI Solutions
 
-> **AI-powered content creation, discovery, and engagement for modern media platforms**
+> **Complete AI-powered media platform with AWS GenAI services**
+
+A comprehensive, production-ready media and entertainment solution that leverages AWS GenAI services including Amazon Bedrock, Amazon SageMaker, Amazon Rekognition, Amazon Transcribe, Amazon Polly, and AWS Elemental MediaConvert to deliver intelligent content creation, discovery, and audience engagement.
+
+## 🚀 Quick Start
+
+### Prerequisites
+- AWS Account with GenAI services access
+- Python 3.11+
+- Node.js 18+ (optional, for frontend)
+- AWS CLI configured
+- Terraform 1.5+ or AWS CDK (for infrastructure)
+
+### Installation
+```bash
+# Clone the repository
+git clone <repository-url>
+cd genAI-labs/media-entertainment
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp config/environments/development.env.example .env
+# Edit .env with your AWS credentials
+
+# Deploy infrastructure
+cd infrastructure/terraform
+terraform init
+terraform apply
+```
+
+### Access the Application
+- **API Documentation**: http://localhost:8000/docs (if running locally)
+- **API Endpoint**: `https://your-api-id.execute-api.us-east-1.amazonaws.com`
 
 ## 🎯 Solution Overview
 
@@ -650,31 +688,116 @@ class ContentQualityTester:
         }
 ```
 
+## 📁 Project Structure
+
+```
+media-entertainment/
+├── README.md                 # This file
+├── architecture.md           # Detailed architecture guide
+├── DEPLOYMENT.md             # Deployment instructions
+├── config/                   # Configuration files
+│   └── environments/        # Environment-specific configs
+├── infrastructure/           # Infrastructure as Code
+│   ├── terraform/           # Terraform configurations
+│   └── cdk/                 # AWS CDK stacks
+├── lambda/                  # Lambda functions
+│   ├── script_generator/
+│   ├── voiceover_synthesizer/
+│   ├── content_generator/
+│   ├── semantic_search/
+│   └── audience_insights/
+├── scripts/                 # Utility scripts
+├── tests/                   # Test suites
+└── docs/                    # Documentation
+    ├── workshop/           # Workshop modules
+    │   ├── README.md
+    │   ├── module-1-setup.md
+    │   ├── module-2-content-studio.md
+    │   ├── module-3-discovery.md
+    │   ├── module-4-generation.md
+    │   ├── module-5-audience-intel.md
+    │   └── module-6-deployment.md
+    └── guides/             # Implementation guides
+        ├── content-studio-setup.md
+        └── discovery-setup.md
+```
+
 ## 📚 Documentation
 
-### API Reference
-- **[Content Studio API](./docs/content-studio-api.md)** - AI content creation endpoints
-- **[Discovery API](./docs/discovery-api.md)** - Content search and recommendation
-- **[Analytics API](./docs/analytics-api.md)** - Audience and performance analytics
-- **[Generation API](./docs/generation-api.md)** - Automated content generation
+### Core Documentation
+- **[Architecture Guide](./architecture.md)** - Step-by-step architecture with phased build process
+- **[Deployment Guide](./DEPLOYMENT.md)** - Complete deployment instructions and production setup
+- **[Workshop](./docs/workshop/README.md)** - Comprehensive 6-module workshop for building the solution
 
 ### Implementation Guides
-- **[Content Pipeline Setup](./docs/content-pipeline-setup.md)** - End-to-end content processing
-- **[AI Studio Configuration](./docs/ai-studio-config.md)** - Content creation automation
-- **[Audience Intelligence](./docs/audience-intelligence.md)** - Audience analysis implementation
-- **[Performance Optimization](./docs/performance-optimization.md)** - Content delivery optimization
+- **[Content Studio Setup](./docs/guides/content-studio-setup.md)** - AI Content Studio implementation
+- **[Discovery Setup](./docs/guides/discovery-setup.md)** - Content discovery and search setup
+
+### Workshop Modules
+1. **[Module 1: Environment & Content Pipeline Setup](./docs/workshop/module-1-setup.md)** - Set up media infrastructure
+2. **[Module 2: AI Content Studio](./docs/workshop/module-2-content-studio.md)** - Build script-to-video workflows
+3. **[Module 3: Content Discovery & Search](./docs/workshop/module-3-discovery.md)** - Implement semantic and visual search
+4. **[Module 4: Automated Content Generation](./docs/workshop/module-4-generation.md)** - Generate marketing and social content
+5. **[Module 5: Audience Intelligence](./docs/workshop/module-5-audience-intel.md)** - Analyze audience engagement
+6. **[Module 6: Production Deployment](./docs/workshop/module-6-deployment.md)** - Deploy to production
+
+## 🧪 Testing
+
+```bash
+# Run unit tests
+pytest tests/unit/
+
+# Run integration tests
+pytest tests/integration/
+
+# Run with coverage
+pytest --cov=./ --cov-report=html
+```
+
+## 📊 Monitoring
+
+- **CloudWatch Dashboards**: Real-time metrics and performance monitoring
+- **CloudWatch Alarms**: Automated alerting for critical issues
+- **Cost Monitoring**: Track Bedrock, MediaConvert, and other service usage
+
+## 🔒 Security
+
+- **IAM Roles**: Least privilege access control
+- **Encryption**: Data encryption at rest and in transit
+- **VPC**: Network isolation for sensitive workloads
+- **WAF**: Web application firewall for API protection
+
+## 🚀 Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+
+### Quick Deploy
+```bash
+# Deploy with Terraform
+cd infrastructure/terraform
+terraform init
+terraform plan
+terraform apply
+
+# Deploy Lambda functions
+./scripts/deploy-lambdas.sh staging
+```
+
+## 📈 Performance & Cost Optimization
+
+- **Lambda Reserved Concurrency**: Control costs and performance
+- **S3 Lifecycle Policies**: Archive old content automatically
+- **CloudFront Caching**: Reduce origin requests
+- **MediaConvert Presets**: Optimize encoding costs
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see the contributing guidelines for details.
+
+## 📄 License
+
+This project is licensed under the MIT License.
 
 ---
 
-**Ready to revolutionize your media and entertainment business with AI? Start creating, discovering, and engaging like never before! 🚀**
-
-## 🔗 Quick Links
-
-- **[Setup Guide](./docs/setup.md)** - Complete deployment instructions
-- **[Content Creation](./docs/content-creation.md)** - AI-powered content generation
-- **[Audience Analytics](./docs/audience-analytics.md)** - Deep audience insights
-- **[Case Studies](./docs/case-studies.md)** - Real-world media AI implementations
-
----
-
-**Next Steps**: Deploy your media AI platform and start creating engaging content at scale! 💪
+**Ready to revolutionize your media and entertainment business with AI? Start with the [Workshop](./docs/workshop/README.md)! 🚀**
