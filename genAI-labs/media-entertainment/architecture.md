@@ -172,10 +172,10 @@ graph LR
     subgraph "Step 3: AI Content Studio"
         Script[Script / Brief]
         StudioAPI[Content Studio API]
-        Bedrock[Bedrock (Storyboards, Scripts)]
-        Polly[Polly (Voiceover)]
-        Rekognition[Rekognition (Visual Analysis)]
-        MC[MediaConvert (Rendering)]
+        Bedrock["Bedrock<br/>(Storyboards, Scripts)"]
+        Polly["Polly<br/>(Voiceover)"]
+        Rekognition["Rekognition<br/>(Visual Analysis)"]
+        MC["MediaConvert<br/>(Rendering)"]
         S3Final[(S3 Final Assets)]
     end
 
@@ -214,11 +214,11 @@ graph LR
 ```mermaid
 graph TB
     subgraph "Step 4: Discovery"
-        Query[User Query]\n(text/image)
+        Query["User Query<br/>(text/image)"]
         API[Discovery API]
         BedrockEmb[Bedrock Embeddings]
         OS[OpenSearch / Vector Index]
-        Rekognition[Rekognition (Visual Features)]
+        Rekognition["Rekognition<br/>(Visual Features)"]
         Results[Ranked Results]
     end
 
@@ -256,8 +256,8 @@ graph LR
     subgraph "Step 5: Content Generation"
         Brief[Campaign Brief]
         GenAPI[Generation API]
-        Bedrock[Bedrock (Text/Image)]
-        Comprehend[Comprehend (Tone/Keywords)]
+        Bedrock["Bedrock<br/>(Text/Image)"]
+        Comprehend["Comprehend<br/>(Tone/Keywords)"]
         Assets[(Generated Assets)]
     end
 
@@ -410,7 +410,7 @@ sequenceDiagram
     participant Rek as Rekognition
     participant Index as Search Index
 
-    User->>API: \"Find clips about space exploration\"
+    User->>API: Find clips about space exploration
     API->>Bedrock: Generate text embeddings
     alt Visual Query
         API->>Rek: Extract visual features
