@@ -334,7 +334,7 @@ graph TB
         CloudWatch[CloudWatch Metrics]
         CloudTrail[CloudTrail Logs]
         RightsDB[(Rights & Licenses)]
-        Alerts[Alarms & Notifications]
+        Alerts["Alarms & Notifications"]
     end
 
     CloudWatch --> Alerts
