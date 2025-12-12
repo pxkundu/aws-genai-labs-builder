@@ -1,0 +1,42 @@
+[
+  {
+    "product_id": "prod_001",
+    "name": "Wireless Bluetooth Headphones",
+    "category": "Electronics",
+    "price": 99.99,
+    "features": [
+      "Noise Cancelling",
+      "30 Hour Battery Life",
+      "Quick Charge",
+      "Comfortable Design"
+    ],
+    "description": "Premium wireless headphones with active noise cancellation"
+  },
+  {
+    "product_id": "prod_002",
+    "name": "Smart Fitness Watch",
+    "category": "Wearables",
+    "price": 249.99,
+    "features": [
+      "Heart Rate Monitor",
+      "GPS Tracking",
+      "Water Resistant",
+      "7 Day Battery"
+    ],
+    "description": "Advanced fitness tracking watch with health monitoring"
+  },
+  {
+    "product_id": "prod_003",
+    "name": "Portable Laptop Stand",
+    "category": "Accessories",
+    "price": 49.99,
+    "features": [
+      "Adjustable Height",
+      "Aluminum Construction",
+      "Lightweight",
+      "Ergonomic Design"
+    ],
+    "description": "Ergonomic laptop stand for better posture"
+  }
+]
+

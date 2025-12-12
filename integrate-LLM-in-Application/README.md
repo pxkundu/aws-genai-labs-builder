@@ -1,6 +1,6 @@
 # 🤖 Integrate LLM in Your Applications
 
-> **A simple, practical guide to adding LLM and AI capabilities to your existing applications**
+> **A comprehensive guide and industry-specific examples for integrating LLM and AI capabilities into real-world applications**
 
 [![AWS](https://img.shields.io/badge/AWS-Bedrock-orange?logo=amazon-aws)](https://aws.amazon.com/bedrock/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-API-green)](https://openai.com/)
@@ -8,7 +8,48 @@
 
 ## 🎯 Overview
 
-This guide provides a straightforward approach to integrating Large Language Models (LLMs) and AI capabilities into your existing applications. Whether you're building a chatbot, adding intelligent search, or automating content generation, this resource will help you get started quickly.
+This repository provides a practical, production-ready approach to integrating Large Language Models (LLMs) and AI capabilities into your applications. It includes industry-specific implementations, complete codebases, and best practices for real-world deployment.
+
+## 📦 Industry Solutions
+
+### 🛒 E-Commerce & Retail
+**Location:** `ecommerce-retail/`
+
+A complete e-commerce platform with AI-powered features:
+- **Smart Product Recommendations** - Personalized suggestions using customer behavior
+- **AI Customer Support** - 24/7 intelligent chatbot for order inquiries
+- **Product Description Generation** - Auto-generate compelling product descriptions
+- **Review Sentiment Analysis** - Understand customer feedback at scale
+- **Inventory Insights** - AI-powered demand forecasting and insights
+
+**Key Features:**
+- Multi-LLM support (OpenAI, AWS Bedrock)
+- RAG-based product knowledge base
+- Real-time recommendation engine
+- Sentiment analysis for reviews
+- Production-ready infrastructure
+
+[📖 View E-Commerce Solution](./ecommerce-retail/README.md) | [🏗️ Architecture](./ecommerce-retail/architecture.md)
+
+---
+
+## 🚀 Quick Start
+
+### For E-Commerce Solution
+
+```bash
+cd ecommerce-retail
+# Setup environment
+cp config/.env.example config/.env
+# Install dependencies
+pip install -r requirements.txt
+# Run locally
+docker-compose up
+```
+
+### General Integration Guide
+
+See the sections below for step-by-step integration approaches.
 
 ## 📋 Table of Contents
 

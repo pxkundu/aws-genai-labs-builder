@@ -1,0 +1,27 @@
+[
+  {
+    "review_id": "rev_001",
+    "product_id": "prod_001",
+    "user_id": "user_001",
+    "rating": 5,
+    "review_text": "Amazing headphones! The noise cancellation is incredible and the battery lasts forever. Highly recommend!",
+    "timestamp": "2024-01-15T10:30:00Z"
+  },
+  {
+    "review_id": "rev_002",
+    "product_id": "prod_001",
+    "user_id": "user_002",
+    "rating": 4,
+    "review_text": "Good quality headphones, but the ear pads could be more comfortable for long sessions.",
+    "timestamp": "2024-01-16T14:20:00Z"
+  },
+  {
+    "review_id": "rev_003",
+    "product_id": "prod_002",
+    "user_id": "user_003",
+    "rating": 5,
+    "review_text": "Best fitness watch I've owned! The GPS is accurate and battery life is impressive.",
+    "timestamp": "2024-01-17T09:15:00Z"
+  }
+]
+
