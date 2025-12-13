@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Telemedicine AI</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🏥</span>
+                <span class="logo-text">TeleMed AI</span>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-view="symptom-checker">Symptom Checker</button>
+                <button class="nav-btn" data-view="chat">Chat Support</button>
+                <button class="nav-btn" data-view="documents">Documents</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Symptom Checker View -->
+            <section id="symptom-checker" class="view active">
+                <div class="view-header">
+                    <h1>🩺 AI Symptom Assessment</h1>
+                    <p>Describe your symptoms and our AI will help assess your condition</p>
+                </div>
+
+                <div class="symptom-form">
+                    <div class="form-group">
+                        <label for="symptoms">Describe your symptoms</label>
+                        <textarea 
+                            id="symptoms" 
+                            placeholder="Example: I've had a headache and mild fever for the past 2 days. I also feel tired and have some body aches."
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" placeholder="Enter age" min="0" max="120">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medical-history">Medical History (optional)</label>
+                        <input type="text" id="medical-history" placeholder="e.g., Diabetes, Hypertension">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medications">Current Medications (optional)</label>
+                        <input type="text" id="medications" placeholder="e.g., Metformin, Lisinopril">
+                    </div>
+
+                    <button id="assess-btn" class="btn btn-primary">
+                        <span class="btn-text">Assess Symptoms</span>
+                        <span class="btn-loading hidden">Analyzing...</span>
+                    </button>
+                </div>
+
+                <!-- Assessment Results -->
+                <div id="assessment-results" class="results-container hidden">
+                    <div class="results-header">
+                        <h2>Assessment Results</h2>
+                        <div id="risk-badge" class="risk-badge"></div>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h3>🎯 Possible Conditions</h3>
+                            <ul id="conditions-list"></ul>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>❓ Follow-up Questions</h3>
+                            <ul id="questions-list"></ul>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>💡 Recommendations</h3>
+                            <ul id="recommendations-list"></ul>
+                        </div>
+
+                        <div class="result-card urgency-card">
+                            <h3>⏰ Urgency Level</h3>
+                            <div id="urgency-level"></div>
+                        </div>
+                    </div>
+
+                    <div class="disclaimer">
+                        <strong>⚠️ Disclaimer:</strong> This assessment is for informational purposes only and does not constitute medical advice. Please consult a healthcare professional for proper diagnosis and treatment.
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="triage-btn" class="btn btn-secondary">Request Triage</button>
+                        <button id="chat-btn" class="btn btn-primary">Chat with AI Assistant</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat View -->
+            <section id="chat" class="view">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>💬 AI Health Assistant</h2>
+                        <p>Available 24/7 to answer your health questions</p>
+                    </div>
+
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-content">
+                                Hello! I'm your AI health assistant. I can help you with:
+                                <ul>
+                                    <li>General health questions</li>
+                                    <li>Appointment scheduling</li>
+                                    <li>Medication information</li>
+                                    <li>Post-visit follow-up</li>
+                                </ul>
+                                How can I assist you today?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-suggestions" id="chat-suggestions">
+                        <button class="suggestion-btn">Schedule an appointment</button>
+                        <button class="suggestion-btn">Check my medications</button>
+                        <button class="suggestion-btn">Start symptom assessment</button>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            placeholder="Type your message..."
+                            autocomplete="off"
+                        >
+                        <button id="send-btn" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents View -->
+            <section id="documents" class="view">
+                <div class="view-header">
+                    <h1>📄 Document Analysis</h1>
+                    <p>Upload medical documents for AI-powered analysis</p>
+                </div>
+
+                <div class="upload-container">
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-icon">📁</div>
+                        <p>Drag and drop your document here</p>
+                        <p class="upload-hint">or click to browse</p>
+                        <input type="file" id="file-input" accept=".pdf,.png,.jpg,.jpeg" hidden>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doc-type">Document Type</label>
+                        <select id="doc-type">
+                            <option value="general">General</option>
+                            <option value="lab_results">Lab Results</option>
+                            <option value="prescription">Prescription</option>
+                            <option value="medical_history">Medical History</option>
+                            <option value="insurance">Insurance Document</option>
+                            <option value="referral">Referral Letter</option>
+                        </select>
+                    </div>
+
+                    <button id="analyze-btn" class="btn btn-primary" disabled>
+                        <span class="btn-text">Analyze Document</span>
+                        <span class="btn-loading hidden">Analyzing...</span>
+                    </button>
+                </div>
+
+                <!-- Document Analysis Results -->
+                <div id="doc-results" class="results-container hidden">
+                    <div class="results-header">
+                        <h2>Analysis Results</h2>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>📝 Summary</h3>
+                        <p id="doc-summary"></p>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h3>🔍 Key Findings</h3>
+                            <ul id="findings-list"></ul>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>💊 Medications Found</h3>
+                            <ul id="medications-list"></ul>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>🏥 Conditions</h3>
+                            <ul id="doc-conditions-list"></ul>
+                        </div>
+
+                        <div class="result-card">
+                            <h3>💡 Recommendations</h3>
+                            <ul id="doc-recommendations-list"></ul>
+                        </div>
+                    </div>
+
+                    <div id="doc-flags" class="flags-container hidden">
+                        <h3>⚠️ Items Requiring Attention</h3>
+                        <ul id="flags-list"></ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>🔒 HIPAA Compliant | Your data is encrypted and secure</p>
+            <p>© 2024 TeleMed AI - For informational purposes only</p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -500,6 +500,27 @@ Monthly Cost = (Input Tokens + Output Tokens) × Price per 1K tokens × Requests
 - `chromadb` - Vector database
 - `tiktoken` - Token counting
 
+## 🏥 Industry Examples
+
+### Healthcare Telemedicine AI
+A complete, production-ready example of integrating LLM into a healthcare telemedicine application.
+
+**[📁 View Healthcare Telemedicine Example](./healthcare-telemedicine/)**
+
+Features:
+- 🩺 AI-powered symptom assessment
+- 🚨 Intelligent virtual triage system
+- 💬 24/7 patient support chatbot
+- 📄 Medical document analysis
+- 🔒 HIPAA-compliant architecture
+
+```bash
+# Quick start
+cd healthcare-telemedicine
+pip install -r requirements.txt
+python backend/app.py
+```
+
 ## 🚀 Next Steps
 
 1. **Start Simple**: Begin with direct API integration

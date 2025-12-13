@@ -1,0 +1,77 @@
+# Healthcare Telemedicine AI - Docker Compose
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      - BEDROCK_MODEL_ID=${BEDROCK_MODEL_ID:-anthropic.claude-3-sonnet-20240229-v1:0}
+      - DYNAMODB_PATIENTS_TABLE=${DYNAMODB_PATIENTS_TABLE:-telemedicine-patients}
+      - DYNAMODB_SESSIONS_TABLE=${DYNAMODB_SESSIONS_TABLE:-telemedicine-sessions}
+      - DYNAMODB_ASSESSMENTS_TABLE=${DYNAMODB_ASSESSMENTS_TABLE:-telemedicine-assessments}
+      - DYNAMODB_CONVERSATIONS_TABLE=${DYNAMODB_CONVERSATIONS_TABLE:-telemedicine-conversations}
+      - S3_DOCUMENTS_BUCKET=${S3_DOCUMENTS_BUCKET:-telemedicine-documents-dev}
+    volumes:
+      - ./backend:/app/backend:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # Frontend (simple static server)
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Local DynamoDB (for development)
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    ports:
+      - "8001:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
+    volumes:
+      - dynamodb-data:/data
+    profiles:
+      - local
+
+  # LocalStack (for local AWS services)
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,dynamodb,sns,sqs
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - localstack-data:/tmp/localstack
+    profiles:
+      - local
+
+volumes:
+  dynamodb-data:
+  localstack-data:
+
+networks:
+  default:
+    name: telemedicine-network
