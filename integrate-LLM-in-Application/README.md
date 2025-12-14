@@ -500,9 +500,9 @@ Monthly Cost = (Input Tokens + Output Tokens) × Price per 1K tokens × Requests
 - `chromadb` - Vector database
 - `tiktoken` - Token counting
 
-## 🏥 Industry Examples
+## 🏭 Industry Examples
 
-### Healthcare Telemedicine AI
+### 🏥 Healthcare Telemedicine AI
 A complete, production-ready example of integrating LLM into a healthcare telemedicine application.
 
 **[📁 View Healthcare Telemedicine Example](./healthcare-telemedicine/)**
@@ -520,6 +520,33 @@ cd healthcare-telemedicine
 pip install -r requirements.txt
 python backend/app.py
 ```
+
+---
+
+### 📱 React Native Todo App with AI Chat
+A simple, beginner-friendly example showing how to integrate LLM chat into a React Native mobile application.
+
+**[📁 View React Native Todo AI Example](./react-native-todo-ai/)**
+
+Features:
+- ✅ Basic Todo CRUD operations
+- 💬 AI chat assistant for task help
+- 🤖 Natural language task creation ("Add task to buy groceries tomorrow")
+- 📱 Clean, production-ready React Native code
+- 🔧 Multiple LLM provider options (OpenAI, Bedrock, Backend Proxy)
+
+```bash
+# Quick start
+cd react-native-todo-ai
+npm install
+npx expo start
+```
+
+**Perfect for learning:**
+- How to structure AI services in mobile apps
+- Custom hooks for AI interactions (`useAI`)
+- Secure API key management with backend proxy
+- Caching and error handling patterns
 
 ## 🚀 Next Steps
 
