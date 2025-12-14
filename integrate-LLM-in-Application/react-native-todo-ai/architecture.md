@@ -266,21 +266,21 @@ sequenceDiagram
 
 ```mermaid
 graph TB
-    subgraph "App State"
-        subgraph "Todos State"
-            TodosList[todos: Todo[]]
-            Filter[filter: 'all' | 'active' | 'completed']
+    subgraph AppState["App State"]
+        subgraph TodosState["Todos State"]
+            TodosList["todos: Todo[]"]
+            Filter["filter: all/active/completed"]
         end
         
-        subgraph "Chat State"
-            Messages[messages: Message[]]
-            Loading[isLoading: boolean]
-            Session[sessionId: string]
+        subgraph ChatState["Chat State"]
+            Messages["messages: Message[]"]
+            Loading["isLoading: boolean"]
+            Session["sessionId: string"]
         end
         
-        subgraph "User State"
-            UserInfo[user: User | null]
-            Settings[settings: Settings]
+        subgraph UserState["User State"]
+            UserInfo["user: User or null"]
+            Settings["settings: Settings"]
         end
     end
 ```
