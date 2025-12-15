@@ -1,0 +1,120 @@
+.partners {
+  position: relative;
+  padding: 6rem 0;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.partners__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.partners__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.partners__title {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
+}
+
+.partners__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.partners__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 100px;
+  background: var(--color-bg-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.partners__logo:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  background: var(--color-bg-card-hover);
+}
+
+.partners__logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.25rem;
+  transition: color var(--transition-fast);
+}
+
+.partners__logo:hover .partners__logo-text {
+  color: var(--color-text-primary);
+}
+
+.partners__logo-name {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.partners__stats {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.partners__stat {
+  text-align: center;
+}
+
+.partners__stat-value {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.partners__stat-label {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .partners {
+    padding: 4rem 0;
+  }
+
+  .partners__grid {
+    gap: 0.75rem;
+  }
+
+  .partners__logo {
+    width: 100px;
+    height: 80px;
+  }
+
+  .partners__logo-text {
+    font-size: 1.25rem;
+  }
+
+  .partners__stats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+

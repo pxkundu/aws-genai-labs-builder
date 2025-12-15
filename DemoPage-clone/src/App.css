@@ -1,0 +1,30 @@
+.app {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.app--loaded {
+  opacity: 1;
+}
+
+.main {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Page transition overlay */
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-primary);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.app--loaded::before {
+  opacity: 0;
+}
+
